@@ -14,9 +14,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@fontsource/poppins": "^5.0.14",
     "i18n": "^0.15.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
+    "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.0",
     "vuetify": "^3.6.3"
   },
@@ -31,6 +33,7 @@
     "eslint-plugin-vue": "^9.23.0",
     "jsdom": "^24.0.0",
     "prettier": "^3.2.5",
+    "sass": "^1.76.0",
     "start-server-and-test": "^2.0.3",
     "vite": "^5.2.8",
     "vitest": "^1.4.0"
