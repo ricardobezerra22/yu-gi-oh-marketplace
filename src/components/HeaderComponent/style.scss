@@ -1,0 +1,57 @@
+@import '@/styles/global.scss';
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search {
+  @include breakpoint(mobile) {
+    width: 200px;
+  }
+  min-width: 400px;
+}
+.second {
+  background-color: $theme-us;
+}
+.nav-subcontainer {
+  display: flex;
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+.nav-subcontainer span {
+  margin-left: 1rem;
+}
+
+.nav-itens {
+  @include font-source(0.875rem, $white, $font-weight-regular, 1.5rem);
+}
+
+::v-deep(.v-input__details) {
+  padding: 0;
+  display: none;
+}
+
+.logo {
+  border-radius: 6px;
+  padding: 10px 10px;
+  &-world {
+    @include font-source(1rem, $white, $font-weight-regular, 1.5rem);
+    letter-spacing: 0.0625rem;
+  }
+  &-news {
+    @include font-source(1rem, $white, $font-weight-bold, 1.5rem);
+    letter-spacing: 0.0625rem;
+  }
+}
+
+.flags {
+  display: flex;
+  gap: 1rem;
+}

@@ -1,1 +1,8 @@
-{}
+{
+  "welcome": {
+    "message": "Ola, Mundo!"
+  },
+  "search": {
+    "placeholder": "Pesquisar..."
+  }
+}

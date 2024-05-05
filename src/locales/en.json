@@ -1,5 +1,8 @@
 {
   "welcome": {
     "message": "Hello, World!"
+  },
+  "search": {
+    "placeholder": "Search..."
   }
 }

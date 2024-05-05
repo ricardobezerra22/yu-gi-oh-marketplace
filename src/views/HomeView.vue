@@ -1,7 +1,6 @@
-<script setup></script>
-
 <template>
-  <main>
-    <div class="greeting">opa</div>
-  </main>
+  <HeaderComponent />
 </template>
+<script setup>
+import HeaderComponent from '@/components/HeaderComponent/HeaderComponent.vue'
+</script>
