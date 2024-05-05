@@ -10,6 +10,10 @@
   margin: 0 auto;
 }
 
+.flags img {
+  cursor: pointer;
+}
+
 .search {
   @include breakpoint(mobile) {
     width: 200px;

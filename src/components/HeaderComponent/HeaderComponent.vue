@@ -18,18 +18,21 @@
       </div>
       <div class="flags">
         <img
+          v-if="this.$i18n.locale !== 'pt'"
           src="@/assets/images/flags/portugal.png"
           alt="portugal"
           width="35"
           @click="handleChangeLocale('pt')"
         />
         <img
+          v-if="this.$i18n.locale !== 'en'"
           src="@/assets/images/flags/usa.png"
           alt="usa"
           width="35"
           @click="handleChangeLocale('en')"
         />
         <img
+          v-if="this.$i18n.locale !== 'br'"
           src="@/assets/images/flags/brazil.png"
           alt="brazil"
           width="35"
