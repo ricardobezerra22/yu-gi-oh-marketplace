@@ -20,9 +20,7 @@
   }
   min-width: 400px;
 }
-.second {
-  background-color: $theme-us;
-}
+
 .nav-subcontainer {
   display: flex;
   padding: 1rem;
@@ -35,6 +33,11 @@
 
 .nav-itens {
   @include font-source(0.875rem, $white, $font-weight-regular, 1.5rem);
+}
+
+.hovered {
+  @include font-source(0.875rem, $white, $font-weight-bold, 1.5rem);
+  cursor: pointer;
 }
 
 ::v-deep(.v-input__details) {
@@ -58,4 +61,35 @@
 .flags {
   display: flex;
   gap: 1rem;
+}
+
+.close-icon {
+  @include font-source(false, $white, false, 1.5rem);
+  cursor: pointer;
+}
+
+.header-of-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: inherit;
+  padding-top: 0.7rem;
+}
+
+::v-deep(.v-list-item-title) {
+  @include font-source(false, $white, false, 1.5rem);
+}
+.nav-drawer-bar {
+  padding: 0.625rem 0.9375rem;
+}
+
+::v-deep(.v-card) {
+  display: flex;
+  align-items: center;
+  color: $white;
+}
+
+.flags-mobile {
+  margin-right: 0.5rem;
 }

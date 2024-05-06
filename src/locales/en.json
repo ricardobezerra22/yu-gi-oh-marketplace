@@ -4,5 +4,16 @@
   },
   "search": {
     "placeholder": "Search..."
+  },
+  "header": {
+    "navItens": {
+      "home": "Home",
+      "business": "Business",
+      "entertainment": "Entertainment",
+      "health": "Health",
+      "science": "Science",
+      "sports": "Sports",
+      "technology": "Technology"
+    }
   }
 }

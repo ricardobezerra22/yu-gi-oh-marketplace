@@ -4,5 +4,16 @@
   },
   "search": {
     "placeholder": "Pesquisar..."
+  },
+  "header": {
+    "navItens": {
+      "home": "Ínicio",
+      "business": "Negócios",
+      "entertainment": "Entreterimento",
+      "health": "Saúde",
+      "science": "Ciência",
+      "sports": "Esportes",
+      "technology": "Tecnologias"
+    }
   }
 }
