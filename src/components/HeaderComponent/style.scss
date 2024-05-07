@@ -10,10 +10,6 @@
   margin: 0 auto;
 }
 
-.flags img {
-  cursor: pointer;
-}
-
 .search {
   @include breakpoint(mobile) {
     width: 200px;
@@ -58,11 +54,6 @@
   }
 }
 
-.flags {
-  display: flex;
-  gap: 1rem;
-}
-
 .close-icon {
   @include font-source(false, $white, false, 1.5rem);
   cursor: pointer;
@@ -88,8 +79,4 @@
   display: flex;
   align-items: center;
   color: $white;
-}
-
-.flags-mobile {
-  margin-right: 0.5rem;
 }

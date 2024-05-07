@@ -1,0 +1,13 @@
+.flags {
+  display: flex;
+  gap: 1rem;
+  margin-right: 0.8rem;
+
+  @media screen and (min-width: 768px) {
+    margin-right: 0;
+  }
+}
+
+.flags img {
+  cursor: pointer;
+}

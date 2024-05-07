@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-version" v-if="this.$vuetify.display.xs">
+  <div class="mobile-version" v-if="isMobile">
     <v-card :style="{ backgroundColor: presentTheme }">
       <v-btn variant="text" @click="toggleNavDrawer">
         <svg-icon type="mdi" :path="menu"></svg-icon>
@@ -25,32 +25,12 @@
         </v-navigation-drawer>
       </v-layout>
 
-      <div class="flags flags-mobile">
-        <img
-          v-if="this.$i18n.locale !== 'pt'"
-          src="@/assets/images/flags/portugal.png"
-          alt="portugal"
-          width="35"
-          @click="handleChangeLocale('pt')"
-        />
-        <img
-          v-if="this.$i18n.locale !== 'en'"
-          src="@/assets/images/flags/usa.png"
-          alt="usa"
-          width="35"
-          @click="handleChangeLocale('en')"
-        />
-        <img
-          v-if="this.$i18n.locale !== 'br'"
-          src="@/assets/images/flags/brazil.png"
-          alt="brazil"
-          width="35"
-          @click="handleChangeLocale('br')"
-        />
+      <div class="flags-mobile">
+        <NationFlags @changeLocale="handleChangeLocale" />
       </div>
     </v-card>
   </div>
-  <div class="web-version" v-if="!this.$vuetify.display.xs">
+  <div class="web-version" v-if="!isMobile">
     <div class="nav-container">
       <div class="logo" :style="{ backgroundColor: presentTheme }">
         <span class="logo-world">world</span><span class="logo-news">news</span>
@@ -67,29 +47,7 @@
           </template>
         </v-text-field>
       </div>
-      <div class="flags">
-        <img
-          v-if="this.$i18n.locale !== 'pt'"
-          src="@/assets/images/flags/portugal.png"
-          alt="portugal"
-          width="35"
-          @click="handleChangeLocale('pt')"
-        />
-        <img
-          v-if="this.$i18n.locale !== 'en'"
-          src="@/assets/images/flags/usa.png"
-          alt="usa"
-          width="35"
-          @click="handleChangeLocale('en')"
-        />
-        <img
-          v-if="this.$i18n.locale !== 'br'"
-          src="@/assets/images/flags/brazil.png"
-          alt="brazil"
-          width="35"
-          @click="handleChangeLocale('br')"
-        />
-      </div>
+      <NationFlags @changeLocale="handleChangeLocale" />
     </div>
     <div class="second-nav" :style="{ backgroundColor: presentTheme }">
       <nav class="nav-subcontainer">
@@ -111,14 +69,15 @@
 
 <script>
 import SvgIcon from '@jamescoyle/vue-icon'
-import { setI18nLanguage } from '@/plugins/i18n.js'
 import { mdiMagnify, mdiAccount, mdiMenu, mdiClose } from '@mdi/js'
 import themes from '@/styles/scss/temp.js'
+import NationFlags from '@/components/NationFlags/NationFlags.vue'
 
 export default {
   name: 'HeaderComponent',
   components: {
-    SvgIcon
+    SvgIcon,
+    NationFlags
   },
   data() {
     return {
@@ -164,7 +123,6 @@ export default {
       this.presentTheme = themeMap[theme] || themes.general.black
     },
     handleChangeLocale(locale) {
-      setI18nLanguage(locale)
       this.changeTheme(locale)
     }
   },
@@ -173,9 +131,13 @@ export default {
       this.updateItems(newLocale)
     }
   },
+  computed: {
+    isMobile() {
+      return this.$vuetify.display.xs
+    }
+  },
   mounted() {
     const locale = localStorage.getItem('locale')
-    setI18nLanguage(locale)
     this.changeTheme(locale)
     this.updateItems(locale)
   }
