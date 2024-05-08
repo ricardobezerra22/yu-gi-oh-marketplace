@@ -1,0 +1,67 @@
+@import '@/styles/global.scss';
+
+.news-teaser {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-self: center;
+  align-items: flex-start;
+  &-main {
+    max-width: 600px;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+    @media screen and (max-width: 992px) {
+      max-width: 400px;
+    }
+  }
+  &-img {
+    border-radius: 0.5rem;
+    max-width: -webkit-fill-available;
+  }
+  &-title {
+    @include font-source(1rem, $link, $font-weight-semibold, 1.5rem);
+    text-align: start;
+    letter-spacing: 0.5px;
+  }
+  &-description {
+    text-align: justify;
+    @include font-source(1.25rem, $black, $font-weight-medium, 1.5rem);
+    letter-spacing: 3px;
+  }
+  .extraneous-desc {
+    @include font-source(1rem, $black, $font-weight-medium, 1.5rem);
+    letter-spacing: 1px;
+  }
+  &-link {
+    @include font-source(1rem, $link, $font-weight-medium, 1.5rem);
+    text-decoration: underline;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+}
+
+.news-teaser-extraneous {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 300px;
+}
+
+.extraneous {
+  width: 300px;
+  max-height: 290px;
+
+  @media screen and (min-width: 768px) {
+    width: -webkit-fill-available;
+  }
+}
+
+.border {
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: block;
+    margin-top: 3rem;
+    border-bottom: 1px solid #919191;
+  }
+}

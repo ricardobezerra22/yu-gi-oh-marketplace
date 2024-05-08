@@ -5,23 +5,16 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1rem;
-  max-width: 1200px;
+  padding: 10px 15px;
+  max-width: 1000px;
   margin: 0 auto;
-}
-
-.search {
-  @include breakpoint(mobile) {
-    width: 200px;
-  }
-  min-width: 400px;
 }
 
 .nav-subcontainer {
   display: flex;
-  padding: 1rem;
+  padding: 15px 5px;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1000px;
 }
 .nav-subcontainer span {
   margin-left: 1rem;
@@ -44,6 +37,7 @@
 .logo {
   border-radius: 6px;
   padding: 10px 10px;
+
   &-world {
     @include font-source(1rem, $white, $font-weight-regular, 1.5rem);
     letter-spacing: 0.0625rem;
@@ -52,6 +46,9 @@
     @include font-source(1rem, $white, $font-weight-bold, 1.5rem);
     letter-spacing: 0.0625rem;
   }
+}
+.logo span {
+  font-size: 1.25rem;
 }
 
 .close-icon {

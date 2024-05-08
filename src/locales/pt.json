@@ -15,5 +15,9 @@
       "sports": "Esportes",
       "technology": "Tecnologias"
     }
+  },
+  "newsTeaser": {
+    "headlines": "Notícias",
+    "fullArticle": "Leia o artigo completo"
   }
 }

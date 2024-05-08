@@ -1,6 +1,6 @@
 <template>
   <div class="mobile-version" v-if="isMobile">
-    <v-card :style="{ backgroundColor: presentTheme }">
+    <v-card :style="{ backgroundColor: presentTheme, minHeight: '60px' }">
       <v-btn variant="text" @click="toggleNavDrawer">
         <svg-icon type="mdi" :path="menu"></svg-icon>
       </v-btn>
@@ -29,24 +29,14 @@
         <NationFlags @changeLocale="handleChangeLocale" />
       </div>
     </v-card>
+    <SearchInput />
   </div>
   <div class="web-version" v-if="!isMobile">
     <div class="nav-container">
       <div class="logo" :style="{ backgroundColor: presentTheme }">
         <span class="logo-world">world</span><span class="logo-news">news</span>
       </div>
-      <div class="search-input">
-        <v-text-field
-          :label="$t('search.placeholder')"
-          variant="outlined"
-          class="search"
-          height="20"
-        >
-          <template v-slot:append-inner>
-            <svg-icon type="mdi" :path="magnify"></svg-icon>
-          </template>
-        </v-text-field>
-      </div>
+      <SearchInput />
       <NationFlags @changeLocale="handleChangeLocale" />
     </div>
     <div class="second-nav" :style="{ backgroundColor: presentTheme }">
@@ -68,16 +58,18 @@
 </template>
 
 <script>
-import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiMagnify, mdiAccount, mdiMenu, mdiClose } from '@mdi/js'
+import SvgIcon from '@jamescoyle/vue-icon'
 import themes from '@/styles/scss/temp.js'
 import NationFlags from '@/components/NationFlags/NationFlags.vue'
+import SearchInput from '@/components/SearchInput/SearchInput.vue'
 
 export default {
   name: 'HeaderComponent',
   components: {
     SvgIcon,
-    NationFlags
+    NationFlags,
+    SearchInput
   },
   data() {
     return {

@@ -1,0 +1,21 @@
+@import '@/styles/global.scss';
+.search {
+  max-width: 300px;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+}
+
+@media screen and (min-width: 620px) {
+  .search {
+    margin-top: 0;
+    max-width: none;
+    width: 400px;
+  }
+}
+@media screen and (min-width: 595px) and (max-width: 619px) {
+  .search {
+    margin-top: 0;
+    max-width: none;
+    width: 250px;
+  }
+}
