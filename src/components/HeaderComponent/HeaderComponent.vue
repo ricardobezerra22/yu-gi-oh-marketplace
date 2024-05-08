@@ -108,7 +108,7 @@ export default {
     changeTheme(theme) {
       const themeMap = {
         pt: themes.pt.theme,
-        en: themes.us.theme,
+        us: themes.us.theme,
         br: themes.br.theme
       }
 

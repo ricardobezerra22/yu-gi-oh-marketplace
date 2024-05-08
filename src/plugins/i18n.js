@@ -4,10 +4,10 @@ import br from '@/locales/br.json'
 import pt from '@/locales/pt.json'
 
 const i18n = createI18n({
-  locale: localStorage.getItem('locale') || 'en',
-  fallbackLocale: 'en',
+  locale: localStorage.getItem('locale') || 'us',
+  fallbackLocale: 'us',
   messages: {
-    en: en,
+    us: en,
     br: br,
     pt: pt
   },

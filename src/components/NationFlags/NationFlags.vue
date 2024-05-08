@@ -9,11 +9,11 @@
     />
 
     <img
-      v-if="this.$i18n.locale !== 'en'"
+      v-if="this.$i18n.locale !== 'us'"
       src="@/assets/images/flags/en.png"
       alt="usa"
       width="35"
-      @click="handleChangeLocale('en')"
+      @click="handleChangeLocale('us')"
     />
 
     <img
