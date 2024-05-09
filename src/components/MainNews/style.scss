@@ -42,10 +42,12 @@
   }
   &-description {
     text-align: justify;
+    letter-spacing: -1px;
     @include font-source(1.25rem, $black, $font-weight-medium, 1.5rem);
-    letter-spacing: 3px;
+
     @media screen and (min-width: 768px) {
       text-align: start;
+      letter-spacing: 3px;
     }
   }
   .extraneous-desc {
@@ -70,11 +72,13 @@
 
 .extraneous {
   width: 300px;
-  max-height: 320px;
-
+  max-height: 400px;
   @media screen and (min-width: 768px) {
     width: -webkit-fill-available;
   }
+}
+.main-article-img {
+  min-height: 340px;
 }
 
 .border {
