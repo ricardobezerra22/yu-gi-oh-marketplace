@@ -22,5 +22,8 @@
   "newsTeaser": {
     "headlines": "Notícias",
     "fullArticle": "Leia o artigo completo"
+  },
+  "latestNews": {
+    "title": "Últimas notícias"
   }
 }

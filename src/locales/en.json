@@ -19,5 +19,8 @@
   "newsTeaser": {
     "headlines": "Headlines",
     "fullArticle": "Read the full article"
+  },
+  "latestNews": {
+    "title": "Latest News"
   }
 }

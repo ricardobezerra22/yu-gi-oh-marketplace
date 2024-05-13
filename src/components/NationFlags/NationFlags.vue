@@ -33,6 +33,7 @@ export default {
   methods: {
     handleChangeLocale(locale) {
       setI18nLanguage(locale)
+      window.location.reload()
       this.$emit('changeLocale', locale)
     }
   },
