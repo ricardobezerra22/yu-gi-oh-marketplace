@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://newsapi.org/v2/',
+  baseURL: 'https://api.coingecko.com/api/v3/',
   params: {
-    apiKey: '48d826abdca44ba69ad4585ed2c70f8b'
+    apiKey: 'CG-ciedPk3GbTJhy6pD8Kccw2Qb'
   },
   headers: {
     Accept: 'application/json',

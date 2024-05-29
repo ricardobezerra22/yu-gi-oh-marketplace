@@ -1,5 +1,5 @@
 {
-  "name": "grupo-boticario-teste-tecnico",
+  "name": "coingecko-api-test",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -16,6 +16,8 @@
   "dependencies": {
     "@fontsource/poppins": "^5.0.14",
     "@jamescoyle/vue-icon": "^0.1.2",
+    "apexcharts": "^3.37.1",
+    "vue3-apexcharts": "^1.4.1",
     "axios": "^1.6.7",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",

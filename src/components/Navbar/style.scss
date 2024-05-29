@@ -1,0 +1,32 @@
+@import '@/styles/global.scss';
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  background: url('https://img.freepik.com/vetores-gratis/abstrato-base-tecnologico_23-2148897676.jpg')
+    no-repeat center center;
+  background-size: cover;
+  color: $white;
+
+  &-header span {
+    @include font-source(1rem, $color: $white, $weight: 700);
+    white-space: nowrap;
+  }
+  &-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input {
+      color: white;
+    }
+  }
+  .search-input {
+    display: flex;
+    width: 12.5rem;
+  }
+  ::v-deep(.v-input__control) {
+    width: inherit;
+  }
+}

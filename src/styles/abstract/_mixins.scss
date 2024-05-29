@@ -28,27 +28,3 @@
     }
   }
 }
-
-@mixin defaultCategories() {
-  @include font-source(1rem, $link, $font-weight-semibold, 1.5rem);
-  text-align: start;
-  letter-spacing: 0.5px;
-}
-
-@mixin defaultDescription() {
-  text-align: justify;
-  letter-spacing: -1px;
-  @include font-source(1.25rem, $black, $font-weight-medium, 1.5rem);
-
-  @media screen and (min-width: 768px) {
-    text-align: start;
-    letter-spacing: 3px;
-  }
-}
-
-@mixin defaultLink() {
-  @include font-source(1rem, $link, $font-weight-medium, 1.5rem);
-  text-decoration: underline;
-  letter-spacing: 0.5px;
-  margin-bottom: 1rem;
-}
