@@ -1,11 +1,15 @@
 import api from '../https'
 
-export async function getBitcoinPrice(coin, currency) {
-  const response = await api.get('/simple/price', {
+export async function getCoinPrice(coin, currency) {
+  const response = await api.get('/coins/markets', {
     params: {
       ids: coin,
-      vs_currencies: currency
+      vs_currency: currency
     }
   })
+  return response.data
+}
+export async function getCoinDetail(coin) {
+  const response = await api.get(`/coins/${coin}`)
   return response.data
 }

@@ -1,0 +1,9 @@
+@import '@/styles/global.scss';
+
+.footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(1, 18, 62, 255);
+  color: $white;
+}

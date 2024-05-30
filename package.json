@@ -16,16 +16,20 @@
   "dependencies": {
     "@fontsource/poppins": "^5.0.14",
     "@jamescoyle/vue-icon": "^0.1.2",
-    "apexcharts": "^3.37.1",
-    "vue3-apexcharts": "^1.4.1",
-    "axios": "^1.6.7",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
+    "apexcharts": "^3.37.1",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6",
+    "expand": "^0.5.0",
     "i18n": "^0.15.1",
     "pinia": "^2.1.7",
+    "socket.io-client": "^4.7.5",
     "vue": "^3.4.21",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.0",
+    "vue3-apexcharts": "^1.4.1",
     "vuetify": "^3.6.3"
   },
   "devDependencies": {

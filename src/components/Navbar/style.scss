@@ -9,7 +9,13 @@
     no-repeat center center;
   background-size: cover;
   color: $white;
-
+  &-title {
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  &-title:hover {
+    color: rgba(137, 141, 182, 0.349);
+  }
   &-header span {
     @include font-source(1rem, $color: $white, $weight: 700);
     white-space: nowrap;
