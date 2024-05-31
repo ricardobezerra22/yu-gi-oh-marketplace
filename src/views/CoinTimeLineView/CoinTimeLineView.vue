@@ -12,7 +12,17 @@
         <span>Bitcoin (BTC)</span>
       </div>
       <div class="historic-report-coin-price">
-        <span>{{ `Last ${time} Days Historic` }}</span>
+        <v-autocomplete
+          v-model="time"
+          :label="'Time history'"
+          :items="timeOptions"
+          :item-title="(item) => item.title"
+          :item-value="(item) => item.value"
+          variant="outlined"
+          color="primary"
+          :loading="loading"
+          @update:model-value="handleUpdate($event)"
+        />
       </div>
     </div>
 
@@ -26,8 +36,22 @@ import { getCurrencyHistory } from '@/services/coinHistory'
 import Charts from '@/components/Charts/Charts.vue'
 const coinHistoryDate = ref([])
 const coinHistoryPrice = ref([])
-const time = ref(30)
-
+const loading = ref(false)
+const timeOptions = ref([
+  { title: '1 day', value: 1 },
+  { title: '3 days', value: 3 },
+  { title: '7 days', value: 7 },
+  { title: '15 days', value: 15 },
+  { title: '30 days', value: 30 },
+  { title: '60 days', value: 60 },
+  { title: '90 days', value: 90 },
+  { title: '180 days', value: 180 },
+  { title: '360 days', value: 360 }
+])
+const time = ref(3)
+const handleUpdate = (e) => {
+  time.value = e
+}
 function formatNumber(number, decimalPlaces = 2) {
   const options = {
     minimumFractionDigits: decimalPlaces,
@@ -35,8 +59,9 @@ function formatNumber(number, decimalPlaces = 2) {
   }
   return number.toLocaleString('pt-BR', options)
 }
-
 const getCoinHistory = async (coin = 'bitcoin', currency = 'usd') => {
+  coinHistoryDate.value.length = 0
+  coinHistoryPrice.value.length = 0
   try {
     const coinHistory = await getCurrencyHistory(coin, currency, time.value)
     coinHistory.prices.map((item) => {

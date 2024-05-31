@@ -11,14 +11,21 @@
   align-items: center;
 }
 
+.text-end {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
 .item-name {
   gap: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
-.text-end {
-  align-items: center;
-  justify-content: center;
-  display: flex;
+
+.item-name:hover {
+  color: #3f84ce;
+  transform: scale(1.05);
 }

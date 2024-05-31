@@ -5,7 +5,7 @@
       <template v-slot:item.name="{ item }">
         <div class="item-name">
           <v-img :src="item.image" height="32"></v-img>
-          {{ item.name }}
+          <span class="coin-name">{{ item.name }}</span>
         </div>
       </template>
       <template v-slot:item.lastDay="{ item }">
