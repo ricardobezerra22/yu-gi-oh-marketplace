@@ -6,7 +6,6 @@
 <script setup>
 import { getCoinPrice } from '@/services/bitcoin'
 import DataTable from '@/components/DataTable/DataTable.vue'
-
 import { formatCurrency } from '@/utils/currencyUtils'
 import { ref, onMounted, computed } from 'vue'
 
@@ -14,23 +13,23 @@ import { ref, onMounted, computed } from 'vue'
 const btcInfo = ref([])
 const latestUpdate = ref('')
 const headers = ref([
-  { title: '#', align: 'start', key: 'position', sortable: false },
+  { title: '#', align: 'center', key: 'position' },
   {
     title: 'Name',
-    align: 'start',
+    align: 'center',
     key: 'name'
   },
 
-  { title: 'Last Price', align: 'center', key: 'price' },
-  { title: '24h High', align: 'center', key: 'highestPrice' },
-  { title: '24h Low', align: 'center', key: 'lowestPrice' },
+  { title: 'Last Price', align: 'center', key: 'price', sortable: false },
+  { title: '24h High', align: 'center', key: 'highestPrice', sortable: false },
+  { title: '24h Low', align: 'center', key: 'lowestPrice', sortable: false },
   { title: '24h %', align: 'center', key: 'lastDay' },
-  { title: 'Market Cap', align: 'center', key: 'marketCap' },
-  { title: 'Volume(24h)', align: 'center', key: 'volume' },
-  { title: 'Circulating Supply', align: 'center', key: 'supply' }
+  { title: 'Market Cap', align: 'center', key: 'marketCap', sortable: false },
+  { title: 'Volume(24h)', align: 'center', key: 'volume', sortable: false },
+  { title: 'Circulating Supply', align: 'center', key: 'supply', sortable: false }
 ])
 const handleCurrency = async () => {
-  const response = await getCoinPrice('bitcoin', 'usd')
+  const response = await getCoinPrice('usd')
   btcInfo.value = response.map((item) => {
     latestUpdate.value = item.last_updated
 
@@ -38,6 +37,7 @@ const handleCurrency = async () => {
       position: item.market_cap_rank,
       name: item.name,
       image: item.image,
+      symbol: item.symbol,
       price: formatCurrency(item.current_price),
       highestPrice: formatCurrency(item.high_24h),
       lowestPrice: formatCurrency(item.low_24h),
@@ -81,7 +81,7 @@ const formattedDate = computed(() => {
 
 onMounted(() => {
   handleCurrency()
-  setInterval(handleCurrency, 180000)
+  setInterval(handleCurrency, 60000)
 })
 </script>
 

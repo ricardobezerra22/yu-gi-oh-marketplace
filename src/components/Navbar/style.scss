@@ -9,12 +9,28 @@
     no-repeat center center;
   background-size: cover;
   color: $white;
+  &-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    &-home,
+    &-tracked {
+      @include font-source(1rem, $color: $white, $weight: 700);
+      transition: 0.3s ease-in-out;
+    }
+    &-home:hover,
+    &-tracked:hover {
+      color: $navbar-hover;
+    }
+  }
   &-title {
     cursor: pointer;
     transition: 0.3s ease-in-out;
   }
   &-title:hover {
-    color: rgba(137, 141, 182, 0.349);
+    color: $navbar-hover;
   }
   &-header span {
     @include font-source(1rem, $color: $white, $weight: 700);

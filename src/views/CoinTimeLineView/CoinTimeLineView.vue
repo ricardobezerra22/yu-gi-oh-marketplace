@@ -2,14 +2,12 @@
   <div class="historic-report">
     <div class="historic-report-coin">
       <div class="historic-report-coin-image">
-        <v-img
-          src="https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"
-          class="currency-image"
-        >
-        </v-img>
+        <v-img :src="cryptoStore.cryptoData?.image" class="currency-image"> </v-img>
       </div>
       <div class="historic-report-coin-text">
-        <span>Bitcoin (BTC)</span>
+        <span>
+          {{ `${cryptoStore.cryptoData?.name} (${cryptoStore.cryptoData?.symbol.toUpperCase()})` }}
+        </span>
       </div>
       <div class="historic-report-coin-price">
         <v-autocomplete
@@ -34,6 +32,17 @@
 import { ref, onMounted, watch } from 'vue'
 import { getCurrencyHistory } from '@/services/coinHistory'
 import Charts from '@/components/Charts/Charts.vue'
+import { useRoute } from 'vue-router'
+import { useCryptoStore } from '@/stores/coinStore'
+defineProps({
+  coin: {
+    type: String,
+    default: ''
+  }
+})
+
+const cryptoStore = useCryptoStore()
+const route = useRoute()
 const coinHistoryDate = ref([])
 const coinHistoryPrice = ref([])
 const loading = ref(false)
@@ -59,11 +68,11 @@ function formatNumber(number, decimalPlaces = 2) {
   }
   return number.toLocaleString('pt-BR', options)
 }
-const getCoinHistory = async (coin = 'bitcoin', currency = 'usd') => {
+const getCoinHistory = async () => {
   coinHistoryDate.value.length = 0
   coinHistoryPrice.value.length = 0
   try {
-    const coinHistory = await getCurrencyHistory(coin, currency, time.value)
+    const coinHistory = await getCurrencyHistory(route.params.coin.toLowerCase(), 'usd', time.value)
     coinHistory.prices.map((item) => {
       coinHistoryDate.value.push(`${new Date(item[0])}`)
     })
@@ -82,6 +91,7 @@ watch(time, () => {
 })
 onMounted(() => {
   getCoinHistory()
+  setInterval(getCoinHistory, 180000)
 })
 </script>
 

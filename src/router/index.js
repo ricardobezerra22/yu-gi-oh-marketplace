@@ -10,8 +10,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/coin/',
+      path: '/coin/:coin',
       name: 'coin',
+      props: true,
       component: () => import('@/views/CoinTimeLineView/CoinTimeLineView.vue')
     }
   ]

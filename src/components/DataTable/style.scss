@@ -10,12 +10,23 @@
   justify-content: center;
   align-items: center;
 }
-
+.coin-name {
+  min-width: 79px;
+  text-align: justify;
+}
 .text-end {
   align-items: center;
   justify-content: center;
   display: flex;
 }
+.currency-image {
+  width: 2.5rem;
+}
+::v-deep(.v-img__img--contain) {
+  max-width: 40px;
+  min-width: 25px;
+}
+
 .item-name {
   gap: 6px;
   display: flex;
@@ -28,4 +39,49 @@
 .item-name:hover {
   color: #3f84ce;
   transform: scale(1.05);
+}
+
+.data-table-last-update-helper {
+  display: inline-block;
+  @include font-source(1.5em, $white, 700, 1.5em);
+  background: $green;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.3);
+  animation:
+    fadeIn 1s ease-out,
+    colorFlash 3s ease-in-out 1s,
+    scalePulse 3s ease-in-out 1s infinite;
+  transition: background 0.5s ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes colorFlash {
+  0% {
+    background: #2ed573;
+  }
+  50% {
+    background: #1e90ff;
+  }
+  100% {
+    background: #2ed573;
+  }
+}
+
+@keyframes scalePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
