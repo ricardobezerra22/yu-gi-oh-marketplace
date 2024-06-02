@@ -67,9 +67,19 @@ const truncatedDescription = (value, maxLength = 10) => {
   } else return value
 }
 const cryptoStore = useCryptoStore()
+function extractFirstName(name) {
+  if (name.includes(' ')) {
+    const nameParts = name.split(' ')
+    return nameParts[0].toLowerCase()
+  } else {
+    return name.toLowerCase()
+  }
+}
+
 const sendToDetailedPage = (name, symbol, image) => {
+  console.log(name)
   cryptoStore.setCryptoData({ name, symbol, image })
-  router.push(`/coin/${name.toLowerCase()}`)
+  router.push(`/coin/${extractFirstName(name)}`)
 }
 const bitcoinStatus = reactive({
   highStatus: 'green',

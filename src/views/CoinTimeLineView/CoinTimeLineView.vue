@@ -25,22 +25,36 @@
     </div>
 
     <Charts :dataPrice="coinHistoryPrice" :categories="coinHistoryDate" />
+    <AlertBus
+      :closable="alertBus.closable"
+      :alert="alertBus.show"
+      :type="alertBus.type"
+      :title="alertBus.title"
+      :text="alertBus.text"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { getCurrencyHistory } from '@/services/coinHistory'
-import Charts from '@/components/Charts/Charts.vue'
+import { ref, onMounted, watch, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCryptoStore } from '@/stores/coinStore'
+import { getCurrencyHistory } from '@/services/coinHistory'
+import Charts from '@/components/Charts/Charts.vue'
+import AlertBus from '@/components/AlertBus/AlertBus.vue'
 defineProps({
   coin: {
     type: String,
     default: ''
   }
 })
-
+const alertBus = reactive({
+  show: false,
+  closable: true,
+  type: '',
+  title: '',
+  text: ''
+})
 const cryptoStore = useCryptoStore()
 const route = useRoute()
 const coinHistoryDate = ref([])
@@ -68,21 +82,37 @@ function formatNumber(number, decimalPlaces = 2) {
   }
   return number.toLocaleString('pt-BR', options)
 }
+const hasLeadingZeroDecimals = (number) => {
+  const numberString = number.toString()
+  const regex = /^0\.0+[^0]/
+  return regex.test(numberString)
+}
 const getCoinHistory = async () => {
+  alertBus.show = false
   coinHistoryDate.value.length = 0
   coinHistoryPrice.value.length = 0
   try {
     const coinHistory = await getCurrencyHistory(route.params.coin.toLowerCase(), 'usd', time.value)
+
     coinHistory.prices.map((item) => {
       coinHistoryDate.value.push(`${new Date(item[0])}`)
-    })
-
-    coinHistory.prices.forEach((item) => {
-      const formattedValue = formatNumber(item[1])
-      coinHistoryPrice.value.push(formattedValue)
+      const hasDecimals = hasLeadingZeroDecimals(item[1])
+      if (hasDecimals) {
+        coinHistoryPrice.value.push(item[1])
+      } else {
+        const formattedValue = formatNumber(item[1])
+        coinHistoryPrice.value.push(formattedValue)
+      }
     })
   } catch (error) {
     console.log(error)
+    alertBus.show = true
+    alertBus.title = error.message
+    alertBus.closable = true
+    alertBus.type = 'error'
+    if (error.code === 'ERR_NETWORK') {
+      alertBus.text = 'Try again in few minutes, or just wait a bit'
+    }
   }
 }
 

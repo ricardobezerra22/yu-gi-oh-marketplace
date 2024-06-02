@@ -52,3 +52,43 @@
     width: inherit;
   }
 }
+
+.navbar-dropdown-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: relative; // Adiciona posicionamento relativo para o dropdown
+
+  &-title {
+    @include font-source(18px, white, 400, normal);
+    text-transform: uppercase;
+  }
+
+  &-icon {
+    width: 40px;
+    height: 40px;
+    color: rgb(245, 245, 245);
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $green;
+    }
+  }
+
+  &-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    width: 100%;
+  }
+
+  &-dropdown.visible {
+    display: block;
+  }
+}

@@ -85,3 +85,7 @@
     transform: scale(1.05);
   }
 }
+
+::v-deep(.v-data-table-footer) {
+  display: none;
+}

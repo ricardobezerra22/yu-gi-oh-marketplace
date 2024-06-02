@@ -2,11 +2,19 @@ import { defineStore } from 'pinia'
 
 export const useCryptoStore = defineStore('cryptoStore', {
   state: () => ({
-    cryptoData: []
+    cryptoData: [],
+    currency: 'usd'
   }),
   actions: {
     setCryptoData(data) {
       this.cryptoData = data
+    },
+    setCurrency(currency) {
+      this.currency = currency
     }
+  },
+  getters: {
+    getCryptoData: (state) => state.cryptoData,
+    getCurrency: (state) => state.currency
   }
 })
