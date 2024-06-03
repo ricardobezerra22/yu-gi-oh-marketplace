@@ -24,7 +24,11 @@
       </div>
     </div>
 
-    <Charts :dataPrice="coinHistoryPrice" :categories="coinHistoryDate" />
+    <Charts
+      :dataPrice="coinHistoryPrice"
+      :categories="coinHistoryDate"
+      :currency="cryptoStore.currency"
+    />
     <AlertBus
       :closable="alertBus.closable"
       :alert="alertBus.show"
@@ -75,7 +79,7 @@ const time = ref(3)
 const handleUpdate = (e) => {
   time.value = e
 }
-function formatNumber(number, decimalPlaces = 2) {
+function formatNumber(number, decimalPlaces = 4) {
   const options = {
     minimumFractionDigits: decimalPlaces,
     maximumFractionDigits: decimalPlaces
@@ -87,38 +91,56 @@ const hasLeadingZeroDecimals = (number) => {
   const regex = /^0\.0+[^0]/
   return regex.test(numberString)
 }
-const getCoinHistory = async () => {
+const processCoinHistory = (coinHistory) => {
+  coinHistory.prices.map((item) => {
+    coinHistoryDate.value.push(`${new Date(item[0])}`)
+    const hasDecimals = hasLeadingZeroDecimals(item[1])
+    if (hasDecimals) {
+      coinHistoryPrice.value.push(item[1])
+    } else if (item[1] <= 100) {
+      coinHistoryPrice.value.push(item[1].toFixed(4))
+    } else {
+      const formattedValue = formatNumber(item[1])
+      coinHistoryPrice.value.push(formattedValue)
+    }
+  })
+}
+
+const handleFetchError = (error) => {
+  alertBus.show = true
+  alertBus.title = error.message
+  alertBus.closable = true
+  alertBus.type = 'error'
+  if (error.code === 'ERR_NETWORK') {
+    alertBus.text = 'Try again in few minutes, or just wait a bit'
+  }
+}
+const resetState = () => {
   alertBus.show = false
   coinHistoryDate.value.length = 0
   coinHistoryPrice.value.length = 0
+}
+const getCoinHistory = async () => {
+  resetState()
   try {
-    const coinHistory = await getCurrencyHistory(route.params.coin.toLowerCase(), 'usd', time.value)
-
-    coinHistory.prices.map((item) => {
-      coinHistoryDate.value.push(`${new Date(item[0])}`)
-      const hasDecimals = hasLeadingZeroDecimals(item[1])
-      if (hasDecimals) {
-        coinHistoryPrice.value.push(item[1])
-      } else {
-        const formattedValue = formatNumber(item[1])
-        coinHistoryPrice.value.push(formattedValue)
-      }
-    })
+    const coinHistory = await getCurrencyHistory(
+      route.params.coin.toLowerCase(),
+      cryptoStore.currency,
+      time.value
+    )
+    processCoinHistory(coinHistory)
   } catch (error) {
-    console.log(error)
-    alertBus.show = true
-    alertBus.title = error.message
-    alertBus.closable = true
-    alertBus.type = 'error'
-    if (error.code === 'ERR_NETWORK') {
-      alertBus.text = 'Try again in few minutes, or just wait a bit'
-    }
+    handleFetchError(error)
   }
 }
 
 watch(time, () => {
   getCoinHistory()
 })
+watch(cryptoStore, () => {
+  getCoinHistory()
+})
+
 onMounted(() => {
   getCoinHistory()
   setInterval(getCoinHistory, 180000)

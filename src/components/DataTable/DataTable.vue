@@ -2,7 +2,14 @@
   <div class="data-table" data-test-data-table>
     <span class="data-table-last-update-helper"> Latest Update: {{ lastUpdate }} UTC</span>
 
-    <v-data-table :hover="true" :headers="headers" :items="items" height="auto" item-value="name">
+    <v-data-table
+      :loading="loading"
+      :hover="true"
+      :headers="headers"
+      :items="items"
+      height="auto"
+      item-value="name"
+    >
       <template v-slot:item.name="{ item }">
         <div class="item-name" @click="sendToDetailedPage(item.name, item.symbol, item.image)">
           <v-img :src="item.image" height="32" class="currency-image"></v-img>
@@ -59,6 +66,10 @@ defineProps({
   lastUpdate: {
     type: String,
     default: ''
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 const truncatedDescription = (value, maxLength = 10) => {

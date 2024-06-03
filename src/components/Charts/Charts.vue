@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   dataPrice: {
@@ -24,7 +24,6 @@ const props = defineProps({
     default: 'USD'
   }
 })
-
 const series = ref([
   {
     name: `Price in ${props.currency}`,
@@ -74,6 +73,14 @@ const chartOptions = ref({
       highlightDataSeries: true
     }
   }
+})
+watch(props, () => {
+  series.value = [
+    {
+      name: `Price in ${props.currency?.toUpperCase()}`,
+      data: props.dataPrice
+    }
+  ]
 })
 </script>
 <style scoped src="./style.scss" lang="scss"></style>

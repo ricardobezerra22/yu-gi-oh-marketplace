@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import { useCryptoStore } from '@/stores/coinStore'
 const navTitle = 'Bitcoin Live Tracker'
 const cryptoStore = useCryptoStore()

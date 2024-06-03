@@ -1,6 +1,6 @@
 <template>
   <div class="container-wrapper">
-    <DataTable :headers="headers" :items="btcInfo" :lastUpdate="formattedDate" />
+    <DataTable :headers="headers" :items="btcInfo" :lastUpdate="formattedDate" :loading="loading" />
     <AlertBus
       :closable="alertBus.closable"
       :alert="alertBus.show"
@@ -25,6 +25,7 @@ const alertBus = reactive({
   title: '',
   text: ''
 })
+const currentCurrencies = ref(['bitcoin', 'ethereum', 'dacxi', 'cosmos'])
 // DataTable
 const cryptoStore = useCryptoStore()
 const btcInfo = ref([])
@@ -45,47 +46,48 @@ const headers = ref([
   { title: 'Volume(24h)', align: 'center', key: 'volume', sortable: false },
   { title: 'Circulating Supply', align: 'center', key: 'supply', sortable: false }
 ])
-
+const loading = ref(false)
 function formatCryptoValue(value) {
   return formatCurrency(value, 'en-US', cryptoStore.currency.toUpperCase())
 }
+const handleFetchError = (error) => {
+  alertBus.show = true
+  alertBus.title = error.message
+  alertBus.closable = true
+  alertBus.type = 'error'
+  if (error.code === 'ERR_NETWORK') {
+    alertBus.text = 'Try again in few minutes, or just wait a bit'
+  }
+}
+const mapCurrency = (currency) => {
+  btcInfo.value = currency.map((item) => {
+    latestUpdate.value = item.last_updated
+
+    return {
+      position: item.market_cap_rank,
+      name: item.name,
+      image: item.image,
+      symbol: item.symbol,
+      price: formatCryptoValue(item.current_price),
+      highestPrice: formatCryptoValue(item.high_24h),
+      lowestPrice: formatCryptoValue(item.low_24h),
+      lastDay: `${item.price_change_percentage_24h.toFixed(2)}%`,
+      marketCap: formatCryptoValue(item.market_cap),
+      volume: formatCryptoValue(item.total_volume),
+      supply: formatCryptoValue(item.circulating_supply)
+    }
+  })
+}
 const handleCurrency = async () => {
   alertBus.show = false
+  loading.value = true
   try {
-    const response = await getSpecificCoinsPrice(cryptoStore.currency, [
-      'bitcoin',
-      'ethereum',
-      'dacxi',
-      'cosmos'
-    ])
-
-    btcInfo.value = response.map((item) => {
-      latestUpdate.value = item.last_updated
-
-      return {
-        position: item.market_cap_rank,
-        name: item.name,
-        image: item.image,
-        symbol: item.symbol,
-        price: formatCryptoValue(item.current_price),
-        highestPrice: formatCryptoValue(item.high_24h),
-        lowestPrice: formatCryptoValue(item.low_24h),
-        lastDay: `${item.price_change_percentage_24h.toFixed(2)}%`,
-        marketCap: formatCryptoValue(item.market_cap),
-        volume: formatCryptoValue(item.total_volume),
-        supply: formatCryptoValue(item.circulating_supply)
-      }
-    })
+    const response = await getSpecificCoinsPrice(cryptoStore.currency, currentCurrencies.value)
+    mapCurrency(response)
   } catch (error) {
-    alertBus.show = true
-    alertBus.title = error.message
-    alertBus.closable = true
-    alertBus.type = 'error'
-    if (error.code === 'ERR_NETWORK') {
-      alertBus.text = 'Try again in few minutes, or just wait a bit'
-    }
-
-    console.log(error.message)
+    handleFetchError(error)
+  } finally {
+    loading.value = false
   }
 }
 const formattedDate = computed(() => {
