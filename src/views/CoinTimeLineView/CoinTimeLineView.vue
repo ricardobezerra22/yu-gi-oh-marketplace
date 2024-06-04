@@ -12,13 +12,14 @@
       <div class="historic-report-coin-price">
         <v-autocomplete
           v-model="time"
-          :label="'Time history'"
+          :label="timeIntervalLabel"
           :items="timeOptions"
           :item-title="(item) => item.title"
           :item-value="(item) => item.value"
+          :loading="loading"
+          class="time-interval-select"
           variant="outlined"
           color="primary"
-          :loading="loading"
           @update:model-value="handleUpdate($event)"
         />
       </div>
@@ -52,6 +53,7 @@ defineProps({
     default: ''
   }
 })
+const timeIntervalLabel = ref('Set time interval')
 const alertBus = reactive({
   show: false,
   closable: true,
