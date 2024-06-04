@@ -1,26 +1,5 @@
 {
   "welcome": {
     "message": "Hello, World!"
-  },
-  "search": {
-    "placeholder": "Search..."
-  },
-  "header": {
-    "navItens": {
-      "home": "Home",
-      "business": "Business",
-      "entertainment": "Entertainment",
-      "health": "Health",
-      "science": "Science",
-      "sports": "Sports",
-      "technology": "Technology"
-    }
-  },
-  "newsTeaser": {
-    "headlines": "Headlines",
-    "fullArticle": "Read the full article"
-  },
-  "latestNews": {
-    "title": "Latest News"
   }
 }

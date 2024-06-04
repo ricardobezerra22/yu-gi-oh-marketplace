@@ -1,10 +1,30 @@
-# grupo-boticario-teste-tecnico
+# Bitcoin Live tracker
 
-This template should help get you started developing with Vue 3 in Vite.
+This project it's about crypto tracker. Where u can see listed cryptos from realtime database (coingecko).
+
+Also change currency u want to see (USD or EURO)
 
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+### Main tecnologies
+
+# Vue3 composition API
+
+# Vuetify styled components for vue
+
+# Scss preprocessor
+
+# Cypress for automated tests
+
+# vitest for unit tests
+
+# Eslint [ESLint]
+
+# Prettier for code formatter
+
+# Pinia for state management
 
 ## Customize configuration
 
@@ -38,6 +58,7 @@ npm run test:unit
 
 ```sh
 npm run test:e2e:dev
+npx run cypress
 ```
 
 This runs the end-to-end tests against the Vite development server.

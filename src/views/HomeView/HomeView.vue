@@ -11,7 +11,7 @@
   </div>
 </template>
 <script setup>
-import { getSpecificCoinsPrice } from '@/services/bitcoin'
+import { getSpecificCoinsPrice } from '@/services/coins'
 import { useCryptoStore } from '@/stores/coinStore'
 import DataTable from '@/components/DataTable/DataTable.vue'
 import AlertBus from '@/components/AlertBus/AlertBus.vue'
