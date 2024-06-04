@@ -64,8 +64,8 @@ npm run dev
 
 ```
 
-<img width="600px" height="600px" src="https://i.imgur.com/4Us7pDL.png" alt="Home">
-<img width="600px" height="600px" src="https://i.imgur.com/H5BlyLH.png" alt="Historic">
+<img width="auto" height="auto" src="https://i.imgur.com/4Us7pDL.png" alt="Home">
+<img width="auto" height="auto" src="https://i.imgur.com/H5BlyLH.png" alt="Historic">
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
