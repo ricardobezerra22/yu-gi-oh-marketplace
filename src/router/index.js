@@ -14,12 +14,6 @@ const router = createRouter({
       name: 'coin',
       props: true,
       component: () => import('@/views/CoinTimeLineView/CoinTimeLineView.vue')
-    },
-    {
-      path: '/tracked/',
-      name: 'tracked',
-      props: true,
-      component: () => import('@/views/TrackedCoinsView/TrackedCoinsView.vue')
     }
   ]
 })

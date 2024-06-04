@@ -6,7 +6,7 @@
       </div>
       <div class="historic-report-coin-text">
         <span>
-          {{ `${cryptoStore.cryptoData?.name} (${cryptoStore.cryptoData?.symbol.toUpperCase()})` }}
+          {{ `${cryptoStore.cryptoData?.name} (${cryptoStore.cryptoData?.symbol?.toUpperCase()})` }}
         </span>
       </div>
       <div class="historic-report-coin-price">

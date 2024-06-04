@@ -1,36 +1,28 @@
 <template>
-  <div class="navbar">
-    <div class="navbar-header">
-      <span @click="handleHomeNavigation" class="navbar-title">{{ navTitle }}</span>
-    </div>
-    <ul class="navbar-links">
-      <li>
-        <RouterLink to="/"><span class="navbar-links-home">Home</span></RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/tracked"
-          ><span class="navbar-links-tracked">Tracked Coins</span></RouterLink
-        >
-      </li>
-    </ul>
+  <div class="container">
+    <div class="navbar">
+      <div class="navbar-header">
+        <span @click="handleHomeNavigation" class="navbar-title">{{ navTitle }}</span>
+      </div>
 
-    <div class="navbar-dropdown-list">
-      <span class="navbar-dropdown-list-title">{{ currentCurrencyTitle }}</span>
-      <v-icon v-if="!isDropdownOpen" class="navbar-dropdown-list-icon" @click="toggleDropdown">{{
-        icons.down
-      }}</v-icon>
-      <v-icon v-else class="navbar-dropdown-list-icon" @click="toggleDropdown">{{
-        icons.up
-      }}</v-icon>
-      <v-list :class="{ 'navbar-dropdown-list-dropdown': true, visible: isDropdownOpen }">
-        <v-list-item
-          v-for="(data, i) in currency"
-          :key="i"
-          :title="data.title"
-          :value="data.title"
-          @click="changeValues(data)"
-        ></v-list-item>
-      </v-list>
+      <div class="navbar-dropdown-list">
+        <span class="navbar-dropdown-list-title">{{ currentCurrencyTitle }}</span>
+        <v-icon v-if="!isDropdownOpen" class="navbar-dropdown-list-icon" @click="toggleDropdown">{{
+          icons.down
+        }}</v-icon>
+        <v-icon v-else class="navbar-dropdown-list-icon" @click="toggleDropdown">{{
+          icons.up
+        }}</v-icon>
+        <v-list :class="{ 'navbar-dropdown-list-dropdown': true, visible: isDropdownOpen }">
+          <v-list-item
+            v-for="(data, i) in currency"
+            :key="i"
+            :title="data.title"
+            :value="data.title"
+            @click="changeValues(data)"
+          ></v-list-item>
+        </v-list>
+      </div>
     </div>
   </div>
 </template>

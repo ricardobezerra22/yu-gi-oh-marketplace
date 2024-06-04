@@ -23,23 +23,16 @@
       <template v-slot:item.lastDay="{ item }">
         <Chip
           :color="item.lastDay > 0 ? bitcoinStatus.highStatus : bitcoinStatus.lowStatus"
-          :text="item.lastDay"
           :description="item.lastDay"
           :icon="item.lastDay > 0 ? bitcoinStatus.highStatusIcon : bitcoinStatus.lowStatusIcon"
         />
       </template>
       <template v-slot:item.highestPrice="{ item }">
-        <Chip
-          :color="'green'"
-          :text="item.highestPrice"
-          :description="item.highestPrice"
-          :icon="'mdi-chevron-up'"
-        />
+        <Chip :color="'green'" :description="item.highestPrice" :icon="'mdi-chevron-up'" />
       </template>
       <template v-slot:item.lowestPrice="{ item }">
         <Chip
           :color="bitcoinStatus.lowStatus"
-          :text="item.lowestPrice"
           :description="item.lowestPrice"
           :icon="bitcoinStatus.lowStatusIcon"
         />
