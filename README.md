@@ -65,9 +65,8 @@ npm run dev
 ```
 
 <p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://imgur.com/4Us7pDL" alt="Project logo"></a>
- <img width=200px height=200px src="https://imgur.com/H5BlyLH" alt="Project logo"></a>
+ <img width=200px height=200px src="https://imgur.com/4Us7pDL" alt="Home">
+ <img width=200px height=200px src="https://imgur.com/H5BlyLH" alt="Historic">
 </p>
 
 ## 🔧 Running the tests <a name = "tests"></a>
