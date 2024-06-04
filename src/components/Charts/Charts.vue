@@ -68,16 +68,6 @@ const chartOptions = ref({
     },
 
     categories: props.categories
-  },
-  legend: {
-    position: 'top',
-    horizontalAlign: 'right',
-    floating: true,
-    offsetY: -25,
-    offsetX: -5,
-    onItemHover: {
-      highlightDataSeries: true
-    }
   }
 })
 watch(props, () => {

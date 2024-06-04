@@ -16,5 +16,14 @@ export const useCryptoStore = defineStore('cryptoStore', {
   getters: {
     getCryptoData: (state) => state.cryptoData,
     getCurrency: (state) => state.currency
+  },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'cryptoStore',
+        storage: localStorage
+      }
+    ]
   }
 })
