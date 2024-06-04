@@ -1,20 +1,34 @@
 <template>
   <div class="container">
-    <div class="navbar">
+    <div class="navbar" data-test-navbar>
       <div class="navbar-header">
-        <span @click="handleHomeNavigation" class="navbar-title">{{ navTitle }}</span>
+        <span data-test-home @click="handleHomeNavigation" class="navbar-title">{{
+          navTitle
+        }}</span>
       </div>
 
       <div class="navbar-dropdown-list">
         <span class="navbar-dropdown-list-title">{{ currentCurrencyTitle }}</span>
-        <v-icon v-if="!isDropdownOpen" class="navbar-dropdown-list-icon" @click="toggleDropdown">{{
-          icons.down
-        }}</v-icon>
-        <v-icon v-else class="navbar-dropdown-list-icon" @click="toggleDropdown">{{
-          icons.up
-        }}</v-icon>
-        <v-list :class="{ 'navbar-dropdown-list-dropdown': true, visible: isDropdownOpen }">
+        <v-icon
+          v-if="!isDropdownOpen"
+          class="navbar-dropdown-list-icon"
+          @click="toggleDropdown"
+          data-test-change-currency-icon-open
+          >{{ icons.down }}</v-icon
+        >
+        <v-icon
+          v-else
+          class="navbar-dropdown-list-icon"
+          @click="toggleDropdown"
+          data-test-change-currency-icon-close
+          >{{ icons.up }}</v-icon
+        >
+        <v-list
+          :class="{ 'navbar-dropdown-list-dropdown': true, visible: isDropdownOpen }"
+          data-test-change-currency-list
+        >
           <v-list-item
+            data-test-change-currency-list-open
             v-for="(data, i) in currency"
             :key="i"
             :title="data.title"

@@ -11,7 +11,11 @@
       item-value="name"
     >
       <template v-slot:item.name="{ item }">
-        <div class="item-name" @click="sendToDetailedPage(item.name, item.symbol, item.image)">
+        <div
+          class="item-name"
+          data-test-data-table-item-name
+          @click="sendToDetailedPage(item.name, item.symbol, item.image)"
+        >
           <v-img :src="item.image" height="32" class="currency-image"></v-img>
           <v-tooltip :text="item.name">
             <template v-slot:activator="{ props }">
@@ -81,7 +85,6 @@ function extractFirstName(name) {
 }
 
 const sendToDetailedPage = (name, symbol, image) => {
-  console.log(name)
   cryptoStore.setCryptoData({ name, symbol, image })
   router.push(`/coin/${extractFirstName(name)}`)
 }
