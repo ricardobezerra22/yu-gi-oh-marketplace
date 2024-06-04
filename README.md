@@ -1,8 +1,3 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
-</p>
-
 <h3 align="center">coingecko-api-test</h3>
 
 <div align="center">
@@ -29,15 +24,10 @@ Also change currency u want to see (USD or EURO)
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+The purpose of this cryptocurrency tracker web development project is to empower users with comprehensive insights into the dynamic world of cryptocurrencies. By offering real-time and historical price monitoring for Bitcoin and other cryptocurrencies, coupled with customizable alerts and detailed price analysis charts, the platform aims to equip users with the tools needed to make informed investment decisions. Moreover, with additional functionalities such as portfolio tracking and news integration, the project strives to provide a holistic view of the cryptocurrency market landscape, facilitating users in managing their investments and staying updated with relevant market developments.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -48,7 +38,8 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them.
 
 ```
-Give examples
+IDE
+node version 20
 ```
 
 ### Installing
@@ -58,49 +49,95 @@ A step by step series of examples that tell you how to get a development env run
 Say what the step will be
 
 ```
-Give the example
+git clone
 ```
 
-And repeat
-
 ```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+Git pull
+
+```
+
+npm run dev
+
+```
+
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=200px height=200px src="https://imgur.com/4Us7pDL" alt="Project logo"></a>
+ <img width=200px height=200px src="https://imgur.com/H5BlyLH" alt="Project logo"></a>
+</p>
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
-Explain how to run the automated tests for this system.
+Little guide to run e2e tests
 
 ### Break down into end to end tests
 
+Run the following command
+
 ```
+
 npm run test:e2e
-execute tests and see automation
-```
-
-### And coding style tests
+npx run cypress
 
 ```
-Default cypress usage
+
+### And coding unit tests
+
+```
+
+npm run test:unit
+
 ```
 
 ## 🎈 Usage <a name="usage"></a>
 
-First u run ``sh
+1. Run the Development Server:
+
+Execute the following command in your terminal:
+
+```
+
 npm run dev
-open localhost:5173 and see the homeView where we see listed crypto ,
-click in wherever crypto do u want and you go to historical price
+
+```
+
+2. Access the Application:
+
+Once the development server is running, navigate to localhost:5173 in your web browser.
+
+3. Explore the HomeView:
+
+Upon accessing the application, you'll land on the HomeView, where you'll find a list of cryptocurrencies.
+
+4. View Historical Prices:
+
+Click on any cryptocurrency to delve into its historical price data.
+
+5. Toggle Currency:
+
+Utilize the currency toggle feature to switch between USD and EUR. All relevant information will be updated accordingly.
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
-``sh
-Npm run build
+```
+
+npm run build
+
+```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
 - [VueJs](https://vuejs.org/) - Web Framework
+- [Vitest](https://vitest.dev/) - Web unit tests framework
+- [Cypress](https://www.cypress.io/) - e2e Testing Framework
+- [Pinia](https://pinia.vuejs.org/introduction.html) - State managemnt
+- [Vuetify](https://vuetifyjs.com/en/) - Web vue style Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
+
+```
+
+```
