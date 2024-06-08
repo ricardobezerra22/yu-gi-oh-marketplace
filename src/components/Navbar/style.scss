@@ -1,0 +1,40 @@
+@import '@/styles/global.scss';
+
+nav {
+  background-color: $black-color;
+  padding: 1rem;
+  width: 100%;
+}
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+li {
+  margin: 0 1rem;
+  color: $white !important;
+}
+
+::v-deep(.v-list-item__prepend) {
+  width: 2.5rem;
+}
+
+.menu-card {
+  background-color: $black-color;
+}
+.btn-menu {
+  cursor: pointer;
+}
+.btn-menu:hover {
+  color: $secondary-color !important;
+}
+
+.menu-hamburger {
+  font-size: 2rem;
+}
+
+.menu-items-mobile {
+  display: flex;
+  align-items: center;
+}
