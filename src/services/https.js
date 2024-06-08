@@ -25,6 +25,9 @@ api.interceptors.request.use(
     return config
   },
   (error) => {
+    if (!(error instanceof Error)) {
+      return Promise.reject(new Error(error))
+    }
     return Promise.reject(error)
   }
 )
