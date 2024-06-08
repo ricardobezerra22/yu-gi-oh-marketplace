@@ -1,5 +1,5 @@
 {
-  "name": "coingecko-api-test",
+  "name": "yu-gi-oh-vue",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -18,21 +18,17 @@
     "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
-    "apexcharts": "^3.37.1",
     "axios": "^1.6.7",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
     "expand": "^0.5.0",
     "i18n": "^0.15.1",
-    "lodash": "^4.17.21",
     "pinia": "^2.1.7",
-    "pinia-plugin-persistedstate": "^3.2.1",
     "socket.io-client": "^4.7.5",
     "vue": "^3.4.21",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.0",
-    "vue3-apexcharts": "^1.4.1",
     "vuetify": "^3.6.3"
   },
   "devDependencies": {

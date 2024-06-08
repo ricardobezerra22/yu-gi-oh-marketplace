@@ -12,4 +12,21 @@ const api = axios.create({
   }
 })
 
+api.interceptors.request.use(
+  async (config) => {
+    const dataStorage = localStorage.getItem('token')
+
+    config.headers.Authorization = `Bearer ${dataStorage}`
+
+    if (config.data && typeof config.data === 'object') {
+      config.data = JSON.stringify(config.data)
+    }
+
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
 export default api
