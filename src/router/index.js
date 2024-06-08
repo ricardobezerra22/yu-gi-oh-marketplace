@@ -8,13 +8,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
-    },
-    {
-      path: '/coin/:coin',
-      name: 'coin',
-      props: true,
-      component: () => import('@/views/CoinTimeLineView/CoinTimeLineView.vue')
     }
+    // {
+    //   path: '/coin/:coin',
+    //   name: 'coin',
+    //   props: true,
+    //   component: () => import('@/views/CoinTimeLineView/CoinTimeLineView.vue')
+    // }
   ]
 })
 

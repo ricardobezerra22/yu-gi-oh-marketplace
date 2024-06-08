@@ -12,6 +12,7 @@ body {
   box-sizing: border-box;
 }
 a {
+  text-decoration: none;
   color: $primary-color;
 }
 a:hover {
@@ -37,7 +38,4 @@ ol {
 ul,
 li {
   list-style: none;
-}
-a {
-  text-decoration: none;
 }
