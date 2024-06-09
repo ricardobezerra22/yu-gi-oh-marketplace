@@ -1,26 +1,35 @@
 @import '@/styles/global.scss';
 .container-wrapper {
   min-height: 100vh;
-  background-image: url('@/assets/images/wall.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+
   z-index: -1;
 }
 
 .container-wrapper {
   display: grid;
-  grid-template-columns: repeat(12, 1fr); /* Define 12 colunas iguais */
+  grid-template-columns: repeat(1, 1fr); /* Define 12 colunas iguais */
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(12, 1fr);
+  }
   gap: 10px; /* Espaçamento entre as colunas */
 }
 
 .background {
   grid-column: span 8;
 }
-
+.login-wrapper-logo img {
+  width: 13rem;
+  @media screen and (min-width: 768px) {
+    width: 15rem;
+  }
+}
 .login-container {
+  z-index: 9999;
   grid-column: span 4;
   background-color: #000000; /* Cor de fundo para Box2 */
+  @media screen and (min-width: 1024px) {
+    border-right: 4px solid $accent-color;
+  }
 }
 
 .login-wrapper {
@@ -39,14 +48,68 @@
 .login-form {
   display: flex;
   flex-direction: column;
+  width: -webkit-fill-available;
   gap: 1rem;
+  @include font-source($white);
   color: $white;
   &-title {
-    color: $accent-color;
+    @include font-source(1.5rem, $accent-color, 700, normal);
     text-align: center;
     margin-bottom: 1.25rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    width: 400px;
   }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: white; /* Cor do texto "ou" */
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid $text-secondary; /* Linha branca */
+}
+
+.divider:not(:empty)::before {
+  margin-right: 0.5em;
+}
+
+.divider:not(:empty)::after {
+  margin-left: 0.5em;
+}
+
+.btn {
+  background-color: $black-color;
+  @include font-source(false, $white, false, false);
+  border: $text-secondary 0.125rem solid;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $accent-color;
+    border: $accent-color 0.125rem solid;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    background-color: $accent-color;
+    border: $accent-color 0.125rem solid;
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.login-form-title-text {
+  @include font-source(1.5rem, $accent-color, bold, normal);
+  text-align: center;
+  position: relative;
+
+  padding: 0.625rem;
 }
