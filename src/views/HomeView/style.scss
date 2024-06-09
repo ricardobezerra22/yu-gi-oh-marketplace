@@ -2,30 +2,8 @@
 
 .container-wrapper {
   min-height: 100vh;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-around;
-  background: black;
-  color: white;
-  padding: 1rem;
-}
-
-.menu-items {
-  &-icon {
-    font-size: 2rem;
-  }
-}
-
-.list-item-title {
-  font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.list-item-title:hover {
-  color: $secondary-color;
+  background-image: url('@/assets/images/wall.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

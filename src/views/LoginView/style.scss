@@ -1,0 +1,52 @@
+@import '@/styles/global.scss';
+.container-wrapper {
+  min-height: 100vh;
+  background-image: url('@/assets/images/wall.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.container-wrapper {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); /* Define 12 colunas iguais */
+  gap: 10px; /* Espaçamento entre as colunas */
+}
+
+.background {
+  grid-column: span 8;
+}
+
+.login-container {
+  grid-column: span 4;
+  background-color: #000000; /* Cor de fundo para Box2 */
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 1.25rem;
+  text-align: center;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: $white;
+  &-title {
+    color: $accent-color;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    width: 400px;
+  }
+}
