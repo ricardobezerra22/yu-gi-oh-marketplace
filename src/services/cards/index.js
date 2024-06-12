@@ -1,4 +1,4 @@
-import api from '@/services/api/http'
+import api from '@/services/api/https'
 
 export async function getAllCards({ rpp, page }) {
   const queryParams = new URLSearchParams({ rpp, page }).toString()

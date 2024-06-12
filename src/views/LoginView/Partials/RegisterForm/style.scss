@@ -17,10 +17,6 @@
   text-align: center;
 }
 
-.register-form {
-  border-radius: 1rem;
-}
-
 .btn {
   background-color: $black-color;
   @include font-source(false, $white, false, false);
@@ -47,6 +43,7 @@
 }
 
 .register-form {
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   width: -webkit-fill-available;
