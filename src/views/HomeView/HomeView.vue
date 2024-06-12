@@ -13,7 +13,7 @@ const menuItems = ref([
   { title: 'Trocas em aberto', path: 'open-trades' },
   { title: 'Inventário', path: 'inventory' },
   { title: 'Login', path: 'login' },
-  { title: 'Sair', path: 'logout' }
+  { title: 'Sair', action: 'logout' }
 ])
 const userEmail = ref('email')
 const username = ref('username')

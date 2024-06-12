@@ -1,0 +1,25 @@
+@import '@/styles/global.scss';
+
+.headline {
+  color: $accent-color;
+  padding: 1rem;
+  text-align: center;
+  &.delete {
+    color: $cancel-color;
+    text-align: start;
+    padding-left: 2rem;
+  }
+}
+.helper-text {
+  text-align: center;
+  &.delete {
+    padding: 1rem;
+  }
+}
+
+.default-dialog-card {
+  padding: 1rem;
+  border: 3px solid $accent-color;
+  border-radius: 1rem !important;
+  background-color: black;
+}

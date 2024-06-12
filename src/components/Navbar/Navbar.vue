@@ -38,7 +38,7 @@
       class="menu-items"
       v-for="(item, i) in menuItems"
       :key="i"
-      @click="handleNavigation(item.path)"
+      @click="handleNavigation(item.path, item.action)"
     >
       <span class="list-item-title"> {{ item.title }} </span>
     </div>
@@ -48,6 +48,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { userLogout } from '@/services/login'
+import { useAuthStore } from '@/stores/authStore.js'
 
 const router = useRouter()
 defineProps({
@@ -66,8 +68,23 @@ defineProps({
 })
 const menu = ref(false)
 
-const handleNavigation = (path) => {
+const handleNavigation = (path, action) => {
+  if (action === 'logout') {
+    logout()
+  }
+  if (!path) return
+
   router.push({ name: path })
+}
+
+const unauthenticatedUser = () => {
+  const authStore = useAuthStore()
+  authStore.clearUserData()
+  router.push({ name: 'home' })
+}
+const logout = () => {
+  userLogout()
+  unauthenticatedUser()
 }
 </script>
 

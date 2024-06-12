@@ -1,10 +1,8 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://api.coingecko.com/api/v3/',
-  params: {
-    apiKey: import.meta.env.API_KEY
-  },
+  baseURL: import.meta.env.API_KEY || 'https://cards-marketplace-api.onrender.com/',
+
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

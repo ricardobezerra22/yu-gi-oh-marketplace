@@ -5,60 +5,59 @@
         <div class="login-wrapper-logo">
           <img src="@/assets/images/logo.png" alt="logo" />
         </div>
-        <div class="login-form">
-          <div class="login-form-title">
-            <span class="login-form-title-text">{{ labels.login }}</span>
-          </div>
-          <div class="login-form-email">
-            <v-text-field
-              v-model="email"
-              type="email"
-              label="Email"
-              append-inner-icon="mdi-email"
-              variant="outlined"
-              density="compact"
-              required
-              rounded
-            ></v-text-field>
-          </div>
-          <div class="login-form-password">
-            <v-text-field
-              v-model="password"
-              type="password"
-              label="Senha"
-              rounded
-              append-inner-icon="mdi-lock"
-              variant="outlined"
-              density="compact"
-              required
-            ></v-text-field>
-          </div>
-          <div class="login-form-button">
-            <v-btn variant="flat" rounded width="100%" class="login-button btn" @click="login">
-              {{ labels.enter }}
-            </v-btn>
-          </div>
-          <div class="divider">
-            <span class="divider-text">ou</span>
-          </div>
-          <v-btn variant="flat" rounded width="100%" class="register-button btn" @click="login">
-            {{ labels.register }}</v-btn
-          >
-        </div>
+        <LoginForm @openRegisterDialog="openRegisterDialog" @handlerLogin="handleLogin" />
       </div>
     </div>
+    <DefaultDialog v-model="registerDialog" :title="registerAccount">
+      <RegisterForm @closeDialog="closeDialog" @handlerRegister="handleRegister" />
+    </DefaultDialog>
+    <AlertBus
+      :title="alert.title"
+      :text="alert.text"
+      :type="alert.type"
+      :alert="alert.show"
+      @closeAlert="closeAlert"
+    />
   </div>
 </template>
+
 <script setup>
+import AlertBus from '@/components/AlertBus/AlertBus.vue'
+import DefaultDialog from '@/components/DefaultDialog/DefaultDialog.vue'
+import RegisterForm from './Partials/RegisterForm/RegisterForm.vue'
+import LoginForm from './Partials/LoginForm/LoginForm.vue'
+import { updateAlert } from '@/utils/alertUtils'
+
 import { ref, reactive } from 'vue'
-const labels = reactive({
-  enter: 'Entrar',
-  register: 'Cadastre-se',
-  or: 'or',
-  login: 'Log in!'
+
+const alert = reactive({
+  show: false,
+  type: '',
+  title: '',
+  text: ''
 })
-const email = ref('')
-const password = ref('')
+
+const registerDialog = ref(false)
+const registerAccount = 'Registro'
+
+const openRegisterDialog = () => {
+  registerDialog.value = true
+}
+const closeDialog = () => {
+  registerDialog.value = false
+}
+
+const closeAlert = () => {
+  alert.show = false
+}
+
+const handleRegister = (alertContent) => {
+  updateAlert(alert, alertContent)
+}
+
+const handleLogin = (alertContent) => {
+  updateAlert(alert, alertContent)
+}
 </script>
 
 <style scoped lang="scss" src="./style.scss"></style>
