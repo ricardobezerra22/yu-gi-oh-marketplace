@@ -9,8 +9,8 @@ import { ref } from 'vue'
 
 const menuItems = ref([
   { title: 'Home', path: 'home' },
-  { title: 'Todas As Cartas', path: 'all-cards' },
-  { title: 'Trocas em aberto', path: 'open-trades' },
+  { title: 'Todas As Cartas', path: 'allCards' },
+  { title: 'Trocas em aberto', path: 'trades' },
   { title: 'Inventário', path: 'inventory' },
   { title: 'Login', path: 'login' },
   { title: 'Sair', action: 'logout' }
