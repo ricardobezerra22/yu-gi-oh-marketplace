@@ -18,18 +18,11 @@ p {
   margin-bottom: 30px;
 }
 
-.cta-button {
-  padding: 12px 24px;
-  font-size: 1.2rem;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.cta-button:hover {
-  background-color: #0056b3;
+.btn {
+  @include font-source(1.5rem, $white, false, false);
+  @include button($black-color, $accent-color, $text-secondary);
+  padding: 0px 40px;
+  border-radius: 3rem;
 }
 
 .home-view {

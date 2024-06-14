@@ -11,7 +11,7 @@
           participar da comunidade para fazer suas próprias trocas e colecionar suas próprias
           cartas.
         </p>
-        <button class="cta-button">Comece a Explorar</button>
+        <v-btn variant="none" class="cta-button btn">Comece a Explorar</v-btn>
       </div>
     </div>
   </div>

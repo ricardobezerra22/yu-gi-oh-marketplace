@@ -28,3 +28,27 @@
     }
   }
 }
+
+@mixin button($color, $hover-color, $border-color) {
+  background-color: $color;
+  border: $border-color 0.125rem solid;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $hover-color;
+    border: $hover-color 0.125rem solid;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    background-color: $hover-color;
+    border: $hover-color 0.125rem solid;
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}

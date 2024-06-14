@@ -12,6 +12,7 @@
 }
 .helper-text {
   text-align: center;
+  color: white;
   &.delete {
     padding: 1rem;
   }
@@ -21,5 +22,5 @@
   padding: 1rem;
   border: 3px solid $accent-color;
   border-radius: 1rem !important;
-  background-color: black;
+  background-color: #868b90;
 }
