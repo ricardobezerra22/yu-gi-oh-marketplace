@@ -1,0 +1,35 @@
+@import '@/styles/global.scss';
+
+.dialog-texts {
+  display: flex;
+  flex-direction: column;
+}
+.default-dialog-card {
+  border-radius: 1rem !important;
+  background-color: $black-color;
+  padding: 1rem;
+  border: $accent-color 0.125rem solid;
+  text-align: center;
+}
+.dialog-image img {
+  border-radius: 1rem;
+  border: 1px solid $accent-color;
+}
+.dialog-content {
+  padding: 10px;
+  gap: 12px;
+  display: flex;
+}
+.headline {
+  color: $accent-color;
+  padding: 1rem;
+}
+.title {
+  @include font-source(1.5rem, $white, 400, normal);
+  text-align: justify;
+  margin-bottom: 1.25rem;
+}
+.description {
+  @include font-source(1rem, $white, 400, normal);
+  text-align: justify;
+}

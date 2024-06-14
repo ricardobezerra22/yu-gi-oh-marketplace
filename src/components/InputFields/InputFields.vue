@@ -17,14 +17,23 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  modelValue: String,
-  label: String,
+  modelValue: {
+    type: String
+  },
+  label: {
+    type: String
+  },
   type: {
     type: String,
     default: 'text'
   },
-  rules: Array,
-  icon: String,
+  rules: {
+    type: Array,
+    default: () => []
+  },
+  icon: {
+    type: String
+  },
   density: {
     type: String,
     default: 'compact'

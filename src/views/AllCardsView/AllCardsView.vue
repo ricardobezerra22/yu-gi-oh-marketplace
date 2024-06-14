@@ -1,11 +1,7 @@
 <template>
   <div class="container-wrapper">
-    <div class="loader" v-if="loading">
-      <div class="text-center">
-        <v-progress-circular color="$vuetify" indeterminate></v-progress-circular>
-      </div>
-    </div>
-    <div class="all-cards" v-else>
+    <Loader :loading />
+    <div class="all-cards" v-if="!loading">
       <div class="all-cards-title">
         <h3>Todas as cartas</h3>
       </div>
@@ -22,21 +18,10 @@
           />
         </div>
         <div class="all-cards-helper">
-          {{ `Mostrando ${cards.length} resultados` }}
+          {{ `Mostrando ${cards.length} resultados válidos` }}
         </div>
       </div>
-      <div class="all-cards-content">
-        <div
-          class="all-cards-content-card"
-          v-for="card in cards"
-          :key="card.id"
-          @click="viewDetails(card)"
-        >
-          <div class="all-cards-content-card-img">
-            <img :src="card.imageUrl" :alt="card.name" />
-          </div>
-        </div>
-      </div>
+      <ListOfCards :cards="cards" @viewDetails="viewDetails" />
 
       <div class="all-cards-pagination">
         <v-pagination
@@ -48,27 +33,16 @@
       </div>
     </div>
 
-    <v-dialog v-model="detailedDialog" transition="dialog-bottom-transition" width="600">
-      <v-card :elevation="3" class="default-dialog-card">
-        <div class="dialog-content">
-          <div class="dialog-image">
-            <img :src="detailedImageUrl" :alt="detailedName" />
-          </div>
-
-          <div class="dialog-texts">
-            <v-card-title class="headline">Detalhes</v-card-title>
-            <span class="title">{{ detailedName }}</span>
-            <span class="description">{{ detailedDescription }}</span>
-          </div>
-        </div>
-      </v-card>
-    </v-dialog>
+    <DetailedDialog v-model="detailedDialog" :detailedDescription :detailedImageUrl :detailedName />
   </div>
 </template>
 
 <script setup>
+import Loader from '@/components/Loader/Loader.vue'
 import { ref, onMounted, watch } from 'vue'
 import { getAllCards } from '@/services/cards'
+import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
+import DetailedDialog from './Partials/DetailedDialog/DetailedDialog.vue'
 
 const cards = ref([])
 const page = ref(1)
@@ -117,12 +91,13 @@ const updateRpp = () => {
 }
 
 const viewDetails = (card) => {
-  detailedDialog.value = true
   detailedName.value = card.name
   detailedDescription.value = card.description
   detailedImageUrl.value = card.imageUrl
+  detailedDialog.value = true
 }
 
+watch(detailedName, () => {})
 onMounted(getAll)
 
 watch(pageCount, () => {})
