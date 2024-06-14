@@ -1,12 +1,12 @@
 <template>
   <div class="container-wrapper">
     <Loader :loading />
-    <div class="all-cards" v-if="!loading">
-      <div class="all-cards-title">
+    <div class="inventory-cards" v-if="!loading">
+      <div class="inventory-cards-title">
         <h3>Minhas cartas</h3>
       </div>
-      <div class="all-cards-filters">
-        <div class="all-cards-helper">
+      <div class="inventory-cards-filters">
+        <div class="inventory-cards-helper">
           {{ `Mostrando ${cards.length} resultados válidos` }}
         </div>
       </div>

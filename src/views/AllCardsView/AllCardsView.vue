@@ -33,14 +33,22 @@
       </div>
     </div>
 
-    <DetailedDialog v-model="detailedDialog" :detailedDescription :detailedImageUrl :detailedName />
+    <DetailedDialog
+      v-model="detailedDialog"
+      :detailedCardInformation="detailedCardInformation"
+      :detailedDescription
+      :detailedImageUrl
+      :detailedName
+      :detailedCardId
+      @obtainCard="handleObtainCard"
+    />
   </div>
 </template>
 
 <script setup>
 import Loader from '@/components/Loader/Loader.vue'
-import { ref, onMounted, watch } from 'vue'
-import { getAllCards } from '@/services/cards'
+import { ref, onMounted, watch, reactive } from 'vue'
+import { getAllCards, addCardToDeck } from '@/services/cards'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
 import DetailedDialog from './Partials/DetailedDialog/DetailedDialog.vue'
 
@@ -55,10 +63,15 @@ const optionsView = ref([
   { title: '50', value: 50 },
   { title: '100', value: 100 }
 ])
+
 const detailedDialog = ref(false)
-const detailedName = ref('')
-const detailedDescription = ref('')
-const detailedImageUrl = ref('')
+const detailedCardInformation = reactive({
+  name: '',
+  description: '',
+  imageUrl: '',
+  cardId: '',
+  createdAt: ''
+})
 
 const getAll = async () => {
   try {
@@ -91,13 +104,26 @@ const updateRpp = () => {
 }
 
 const viewDetails = (card) => {
-  detailedName.value = card.name
-  detailedDescription.value = card.description
-  detailedImageUrl.value = card.imageUrl
+  detailedCardInformation.name = card.name
+  detailedCardInformation.description = card.description
+  detailedCardInformation.imageUrl = card.imageUrl
+  detailedCardInformation.cardId = card.id
+  detailedCardInformation.createdAt = card.createdAt
   detailedDialog.value = true
 }
 
-watch(detailedName, () => {})
+const handleObtainCard = () => {
+  const payload = {
+    cardIds: [detailedCardInformation.cardId]
+  }
+  try {
+    addCardToDeck(payload)
+  } catch (error) {
+    console.error('Erro ao adicionar a carta:', error)
+  }
+}
+
+watch(detailedCardInformation, () => {})
 onMounted(getAll)
 
 watch(pageCount, () => {})
