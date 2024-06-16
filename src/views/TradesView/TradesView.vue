@@ -2,7 +2,24 @@
   <div class="trade-card-container-title text-center pt-4">
     <span>Últimas trocas em andamento</span>
   </div>
-  <div class="trade-card-container">
+  <div class="filters">
+    <div class="filters-items-per-page">
+      <v-autocomplete
+        variant="outlined"
+        label="Items por página"
+        :items="optionsView"
+        :items-title="optionsView.title"
+        v-model="rpp"
+        @change="updateRpp"
+        @update:modelValue="updateRpp"
+      />
+    </div>
+    <div class="all-cards-helper">
+      {{ `Mostrando ${trades.length} resultados válidos` }}
+    </div>
+    <Loader :loading />
+  </div>
+  <div class="trade-card-container" v-if="!loading">
     <div class="trade-card-container-cards" v-for="(trade, index) in trades" :key="index">
       <div class="trade-card-container-cards-title text-center mb-4">
         <span
@@ -55,10 +72,19 @@
       :isObtainable="false"
     />
   </div>
+  <div class="pagination">
+    <v-pagination
+      rounded
+      v-model="page"
+      :length="pageCount"
+      @update:modelValue="updatePage"
+    ></v-pagination>
+  </div>
 </template>
 <script setup>
+import Loader from '@/components/Loader/Loader.vue'
 import { compareTime } from '@/utils/dateUtils'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { getRequestedCards } from '@/services/trades'
 import DetailedDialog from '@/views/AllCardsView/Partials/DetailedDialog/DetailedDialog.vue'
 
@@ -70,6 +96,7 @@ const detailedCardInformation = reactive({
   cardId: '',
   createdAt: ''
 })
+const pageCount = ref(1)
 const loading = ref(false)
 const openDetailedDialog = (card) => {
   detailedCardInformation.name = card.name
@@ -79,12 +106,19 @@ const openDetailedDialog = (card) => {
   detailedCardInformation.createdAt = card.createdAt
   detailedDialog.value = true
 }
-
+const optionsView = ref([
+  { title: '5', value: 5 },
+  { title: '10', value: 10 },
+  { title: '15', value: 15 },
+  { title: '25', value: 25 }
+])
+const page = ref(1)
+const rpp = ref(10)
 const trades = ref([])
 const getRequests = async () => {
   try {
     loading.value = true
-    const { data } = await getRequestedCards({ rpp: 10, page: 1 })
+    const { data, headers } = await getRequestedCards({ rpp: rpp.value, page: page.value })
     trades.value = data.list
       .map((trade) => {
         const offeredCards = trade.tradeCards.filter((item) => item.type === 'OFFERING')
@@ -101,7 +135,8 @@ const getRequests = async () => {
           return null
         }
       })
-      .filter((trade) => trade !== null) // Remove invalid trades
+      .filter((trade) => trade !== null)
+    pageCount.value = Math.ceil(headers['content-length'] / rpp.value)
   } catch (error) {
     console.error('Erro ao buscar as cartas:', error)
   } finally {
@@ -119,9 +154,18 @@ const getCardStyle = (index) => {
   }
 }
 
+const updateRpp = () => {
+  page.value = 1
+  getRequests()
+}
+const updatePage = () => {
+  getRequests()
+}
+
 onMounted(() => {
   getRequests()
 })
+watch(pageCount, () => {})
 </script>
 
 <style scoped lang="scss" src="./style.scss"></style>

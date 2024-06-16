@@ -22,17 +22,16 @@
         </div>
       </div>
       <ListOfCards :cards="cards" @viewDetails="viewDetails" />
-
-      <div class="all-cards-pagination">
-        <v-pagination
-          rounded
-          v-model="page"
-          :length="pageCount"
-          @update:modelValue="updatePage"
-        ></v-pagination>
-      </div>
     </div>
 
+    <div class="all-cards-pagination">
+      <v-pagination
+        rounded
+        v-model="page"
+        :length="pageCount"
+        @update:modelValue="updatePage"
+      ></v-pagination>
+    </div>
     <DetailedDialog
       v-model="detailedDialog"
       :detailedCardInformation="detailedCardInformation"
