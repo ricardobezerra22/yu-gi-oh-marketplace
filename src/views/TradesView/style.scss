@@ -1,5 +1,53 @@
-@import '@/styles/global.scss';
+/* style.scss */
+@import '@/styles/global.scss'; // Assuming your global styles are defined here
 
-.container-wrapper {
+.trade-card-container {
+  align-items: center;
   min-height: 100vh;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  gap: 1rem;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  max-width: 650px;
+
+  &-cards {
+    border: 1px solid gray;
+    padding: 1rem;
+  }
+}
+
+.offered-cards,
+.received-cards {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap; /* Allow for cards to wrap on multiple lines */
+  gap: 1rem; /* Add spacing between cards */
+}
+
+.offered {
+}
+
+.trade-card {
+  display: flex; /* Allow for stacking cards horizontally */
+  align-items: center; /* Center card content vertically */
+  margin-bottom: 10px;
+  position: relative; /* Make container relative to contain absolute positioned cards */
+  width: 100px; /* Set a fixed width for the card stack */
+  height: 100px; /* Set a fixed height for the card stack */
+}
+
+.trade-card-container-cards-img {
+  width: 100%; /* Ensure the image fits within the container */
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.trade-card-container-cards-img:hover {
+  transform: scale(1.1);
+  border: 1px solid $accent-color;
+  border-radius: 0.5rem;
 }

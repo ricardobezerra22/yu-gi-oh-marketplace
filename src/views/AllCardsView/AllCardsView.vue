@@ -36,10 +36,6 @@
     <DetailedDialog
       v-model="detailedDialog"
       :detailedCardInformation="detailedCardInformation"
-      :detailedDescription
-      :detailedImageUrl
-      :detailedName
-      :detailedCardId
       @obtainCard="handleObtainCard"
     />
   </div>

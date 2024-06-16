@@ -11,8 +11,9 @@
           <span class="title">{{ detailedCardInformation.name }}</span>
           <span class="description">{{ detailedCardInformation.description }}</span>
         </div>
-
-        <v-btn class="obtain-button" @click="obtainCard(detailedCardId)"> Obter </v-btn>
+        <div class="btn-action" v-if="isObtainable">
+          <v-btn class="obtain-button" @click="obtainCard(detailedCardId)"> Obter </v-btn>
+        </div>
       </div>
     </v-card>
   </v-dialog>
@@ -21,7 +22,12 @@
 <script setup>
 defineProps({
   detailedCardInformation: {
-    type: Object
+    type: Object,
+    default: () => {}
+  },
+  isObtainable: {
+    type: Boolean,
+    default: true
   }
 })
 
