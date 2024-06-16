@@ -5,33 +5,15 @@
       <div class="all-cards-title">
         <h3>Todas as cartas</h3>
       </div>
-      <div class="all-cards-filters">
-        <div class="all-cards-filters-items-per-page">
-          <v-autocomplete
-            variant="outlined"
-            label="Items por página"
-            :items="optionsView"
-            :items-title="optionsView.title"
-            v-model="rpp"
-            @change="updateRpp"
-            @update:modelValue="updateRpp"
-          />
-        </div>
-        <div class="all-cards-helper">
-          {{ `Mostrando ${cards.length} resultados válidos` }}
-        </div>
-      </div>
+      <ItemsPerPageFilter
+        :optionsView="optionsView"
+        :rpp="rpp"
+        @updateRpp="updateRpp"
+        :results="cards.length"
+      />
       <ListOfCards :cards="cards" @viewDetails="viewDetails" />
     </div>
-
-    <div class="all-cards-pagination">
-      <v-pagination
-        rounded
-        v-model="page"
-        :length="pageCount"
-        @update:modelValue="updatePage"
-      ></v-pagination>
-    </div>
+    <Pagination :page="page" :pageCount="pageCount" @updatePage="updatePage" />
     <DetailedDialog
       v-model="detailedDialog"
       :detailedCardInformation="detailedCardInformation"
@@ -41,9 +23,11 @@
 </template>
 
 <script setup>
-import Loader from '@/components/Loader/Loader.vue'
 import { ref, onMounted, watch, reactive } from 'vue'
 import { getAllCards, addCardToDeck } from '@/services/cards'
+import Pagination from '@/components/Pagination/Pagination.vue'
+import Loader from '@/components/Loader/Loader.vue'
+import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilter.vue'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
 import DetailedDialog from './Partials/DetailedDialog/DetailedDialog.vue'
 
@@ -89,11 +73,13 @@ const formatCard = (card) => ({
   createdAt: card.createdAt
 })
 
-const updatePage = () => {
+const updatePage = (value) => {
+  page.value = value
   getAll()
 }
 
-const updateRpp = () => {
+const updateRpp = (value) => {
+  rpp.value = value
   page.value = 1
   getAll()
 }

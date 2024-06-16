@@ -77,8 +77,7 @@ const validationRules = {
   email: [
     (value) => !!value || 'Campo obrigatório!',
     (value) => {
-      const pattern =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       return pattern.test(value) || 'E-mail inválido.'
     }
   ],
