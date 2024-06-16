@@ -10,11 +10,11 @@
           <v-card-title class="headline">Detalhes</v-card-title>
           <span class="title">{{ detailedCardInformation.name }}</span>
           <span class="description">{{ detailedCardInformation.description }}</span>
-        </div>
-        <div class="btn-action" v-if="isObtainable">
-          <v-btn class="obtain-button" :loading="loading" @click="obtainCard(detailedCardId)">
-            Obter
-          </v-btn>
+          <div class="btn-action" v-if="isObtainable">
+            <v-btn class="obtain-button" :loading="loading" @click="obtainCard(detailedCardId)">
+              {{ obtainText }}
+            </v-btn>
+          </div>
         </div>
       </div>
     </v-card>
@@ -38,7 +38,7 @@ defineProps({
 })
 
 const emit = defineEmits(['obtainCard'])
-
+const obtainText = 'Obter'
 const obtainCard = (card) => {
   emit('obtainCard', card)
 }

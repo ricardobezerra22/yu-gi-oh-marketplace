@@ -39,7 +39,7 @@ import Pagination from '@/components/Pagination/Pagination.vue'
 import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilter.vue'
 import Loader from '@/components/Loader/Loader.vue'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
-import DetailedDialog from './Partials/DetailedDialog/DetailedDialog.vue'
+import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 
 const cards = ref([])
 const page = ref(1)

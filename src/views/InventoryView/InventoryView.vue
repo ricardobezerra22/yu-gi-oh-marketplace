@@ -13,7 +13,7 @@
           {{ `Mostrando ${cards.length} resultados válidos` }}
         </div>
       </div>
-      <ListOfCards :cards="cards" />
+      <ListOfCards :cards="cards" @view-details="viewDetails" />
     </div>
     <DefaultDialog
       v-model="requestDialog"
@@ -71,16 +71,24 @@
         <v-btn variant="outlined" @click="handleSubmitTradeRequest">{{ 'Solicitar troca' }}</v-btn>
       </div>
     </DefaultDialog>
+    <DetailedDialog
+      v-model="detailedDialog"
+      :loading
+      :detailedCardInformation="detailedCardInformation"
+      :isObtainable="false"
+    />
   </div>
 </template>
 
 <script setup>
 import DefaultDialog from '@/components/DefaultDialog/DefaultDialog.vue'
 import Loader from '@/components/Loader/Loader.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { getMyCards, getAllCards } from '@/services/cards'
 import { requestTrade } from '@/services/trades'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
+
+import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 
 const cards = ref([])
 const allCards = ref([])
@@ -88,7 +96,14 @@ const loading = ref(false)
 const offeringCard = ref([])
 const receivingCard = ref([])
 const requestDialog = ref(false)
-
+const detailedDialog = ref(false)
+const detailedCardInformation = reactive({
+  name: '',
+  description: '',
+  imageUrl: '',
+  cardId: '',
+  createdAt: ''
+})
 const getInventory = async () => {
   try {
     loading.value = true
@@ -131,6 +146,14 @@ const handleSubmitTradeRequest = () => {
   } catch (error) {
     console.error('Erro ao solicitar troca:', error)
   }
+}
+const viewDetails = (card) => {
+  detailedCardInformation.name = card.name
+  detailedCardInformation.description = card.description
+  detailedCardInformation.imageUrl = card.imageUrl
+  detailedCardInformation.cardId = card.id
+  detailedCardInformation.createdAt = card.createdAt
+  detailedDialog.value = true
 }
 
 const formatCard = (card) => ({

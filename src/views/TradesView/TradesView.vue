@@ -79,7 +79,7 @@ import { updateAlert } from '@/utils/alertUtils'
 import { useAuthStore } from '@/stores/authStore'
 import { getRequestedCards } from '@/services/trades'
 import Loader from '@/components/Loader/Loader.vue'
-import DetailedDialog from '@/views/AllCardsView/Partials/DetailedDialog/DetailedDialog.vue'
+import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 import AlertBus from '@/components/AlertBus/AlertBus.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilter.vue'
@@ -121,23 +121,6 @@ const trades = ref([])
 const handlerAlert = (type, title, text) => {
   updateAlert(alert, { show: true, type: type, title: title, text: text })
 }
-const getRequests = async () => {
-  loading.value = true
-  try {
-    const response = await fetchRequestedCards()
-    processTradeData(response.data.list)
-    updatePageCount(response.headers['content-length'])
-  } catch (error) {
-    handlerAlert('error', 'Erro ao buscar as cartas', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-const fetchRequestedCards = async () => {
-  return await getRequestedCards({ rpp: rpp.value, page: page.value })
-}
-
 const processTradeData = (tradesList) => {
   trades.value = tradesList.map(formatTrade).filter(isValidTrade)
 }
@@ -164,11 +147,18 @@ const filterCardsByType = (cards, type) => {
 const isValidTrade = (trade) => {
   return trade !== null
 }
-
-const updatePageCount = (contentLength) => {
-  pageCount.value = Math.ceil(contentLength / rpp.value)
+const getRequests = async () => {
+  loading.value = true
+  try {
+    const { data, headers } = await getRequestedCards({ rpp: rpp.value, page: page.value })
+    processTradeData(data.list)
+    pageCount.value = Math.ceil(headers['content-length'] / rpp.value)
+  } catch (error) {
+    handlerAlert('error', 'Erro ao buscar as cartas', error)
+  } finally {
+    loading.value = false
+  }
 }
-
 const closeAlert = () => {
   alert.show = false
 }
