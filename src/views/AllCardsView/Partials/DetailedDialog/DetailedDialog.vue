@@ -12,7 +12,9 @@
           <span class="description">{{ detailedCardInformation.description }}</span>
         </div>
         <div class="btn-action" v-if="isObtainable">
-          <v-btn class="obtain-button" @click="obtainCard(detailedCardId)"> Obter </v-btn>
+          <v-btn class="obtain-button" :loading="loading" @click="obtainCard(detailedCardId)">
+            Obter
+          </v-btn>
         </div>
       </div>
     </v-card>
@@ -28,6 +30,10 @@ defineProps({
   isObtainable: {
     type: Boolean,
     default: true
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 

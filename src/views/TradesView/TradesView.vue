@@ -2,23 +2,13 @@
   <div class="trade-card-container-title text-center pt-4">
     <span>Últimas trocas em andamento</span>
   </div>
-  <div class="filters">
-    <div class="filters-items-per-page">
-      <v-autocomplete
-        variant="outlined"
-        label="Items por página"
-        :items="optionsView"
-        :items-title="optionsView.title"
-        v-model="rpp"
-        @change="updateRpp"
-        @update:modelValue="updateRpp"
-      />
-    </div>
-    <div class="all-cards-helper">
-      {{ `Mostrando ${trades.length} resultados válidos` }}
-    </div>
-    <Loader :loading />
-  </div>
+  <ItemsPerPageFilter
+    :optionsView="optionsView"
+    :rpp="rpp"
+    @updateRpp="updateRpp"
+    :results="trades.length"
+  />
+  <Loader :loading />
   <div class="trade-card-container" v-if="!loading">
     <div class="trade-card-container-cards" v-for="(trade, index) in trades" :key="index">
       <div class="trade-card-container-cards-title text-center mb-4">
@@ -73,22 +63,26 @@
       :isObtainable="false"
     />
   </div>
-  <div class="pagination">
-    <v-pagination
-      rounded
-      v-model="page"
-      :length="pageCount"
-      @update:modelValue="updatePage"
-    ></v-pagination>
-  </div>
+  <Pagination :page="page" :pageCount="pageCount" @updatePage="updatePage" />
+  <AlertBus
+    :title="alert.title"
+    :text="alert.text"
+    :type="alert.type"
+    :alert="alert.show"
+    @closeAlert="closeAlert"
+  />
 </template>
 <script setup>
-import Loader from '@/components/Loader/Loader.vue'
 import { compareTime } from '@/utils/dateUtils'
 import { ref, reactive, onMounted, watch } from 'vue'
+import { updateAlert } from '@/utils/alertUtils'
 import { useAuthStore } from '@/stores/authStore'
 import { getRequestedCards } from '@/services/trades'
+import Loader from '@/components/Loader/Loader.vue'
 import DetailedDialog from '@/views/AllCardsView/Partials/DetailedDialog/DetailedDialog.vue'
+import AlertBus from '@/components/AlertBus/AlertBus.vue'
+import Pagination from '@/components/Pagination/Pagination.vue'
+import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilter.vue'
 
 const detailedDialog = ref(false)
 const detailedCardInformation = reactive({
@@ -97,6 +91,12 @@ const detailedCardInformation = reactive({
   imageUrl: '',
   cardId: '',
   createdAt: ''
+})
+const alert = reactive({
+  show: false,
+  type: '',
+  title: '',
+  text: ''
 })
 const auth = useAuthStore()
 const pageCount = ref(1)
@@ -118,35 +118,60 @@ const optionsView = ref([
 const page = ref(1)
 const rpp = ref(10)
 const trades = ref([])
+const handlerAlert = (type, title, text) => {
+  updateAlert(alert, { show: true, type: type, title: title, text: text })
+}
 const getRequests = async () => {
+  loading.value = true
   try {
-    loading.value = true
-    const { data, headers } = await getRequestedCards({ rpp: rpp.value, page: page.value })
-    trades.value = data.list
-      .map((trade) => {
-        const offeredCards = trade.tradeCards.filter((item) => item.type === 'OFFERING')
-        const receivedCards = trade.tradeCards.filter((item) => item.type === 'RECEIVING')
-
-        if (offeredCards.length > 0 && receivedCards.length > 0) {
-          return {
-            name: trade.user.name ? trade.user.name : 'Anônimo',
-            createdAt: compareTime(trade.createdAt),
-            offeredCards,
-            receivedCards
-          }
-        } else {
-          return null
-        }
-      })
-      .filter((trade) => trade !== null)
-    pageCount.value = Math.ceil(headers['content-length'] / rpp.value)
+    const response = await fetchRequestedCards()
+    processTradeData(response.data.list)
+    updatePageCount(response.headers['content-length'])
   } catch (error) {
-    console.error('Erro ao buscar as cartas:', error)
+    handlerAlert('error', 'Erro ao buscar as cartas', error)
   } finally {
     loading.value = false
   }
 }
 
+const fetchRequestedCards = async () => {
+  return await getRequestedCards({ rpp: rpp.value, page: page.value })
+}
+
+const processTradeData = (tradesList) => {
+  trades.value = tradesList.map(formatTrade).filter(isValidTrade)
+}
+
+const formatTrade = (trade) => {
+  const offeredCards = filterCardsByType(trade.tradeCards, 'OFFERING')
+  const receivedCards = filterCardsByType(trade.tradeCards, 'RECEIVING')
+
+  if (offeredCards.length > 0 && receivedCards.length > 0) {
+    return {
+      name: trade.user.name || 'Anônimo',
+      createdAt: compareTime(trade.createdAt),
+      offeredCards,
+      receivedCards
+    }
+  }
+  return null
+}
+
+const filterCardsByType = (cards, type) => {
+  return cards.filter((card) => card.type === type)
+}
+
+const isValidTrade = (trade) => {
+  return trade !== null
+}
+
+const updatePageCount = (contentLength) => {
+  pageCount.value = Math.ceil(contentLength / rpp.value)
+}
+
+const closeAlert = () => {
+  alert.show = false
+}
 const getCardStyle = (index) => {
   const offset = index * 20
   return {
@@ -157,11 +182,13 @@ const getCardStyle = (index) => {
   }
 }
 
-const updateRpp = () => {
+const updateRpp = (value) => {
+  rpp.value = value
   page.value = 1
   getRequests()
 }
-const updatePage = () => {
+const updatePage = (value) => {
+  page.value = value
   getRequests()
 }
 

@@ -16,8 +16,16 @@
     <Pagination :page="page" :pageCount="pageCount" @updatePage="updatePage" />
     <DetailedDialog
       v-model="detailedDialog"
+      :loading
       :detailedCardInformation="detailedCardInformation"
       @obtainCard="handleObtainCard"
+    />
+    <AlertBus
+      :title="alert.title"
+      :text="alert.text"
+      :type="alert.type"
+      :alert="alert.show"
+      @closeAlert="closeAlert"
     />
   </div>
 </template>
@@ -25,9 +33,11 @@
 <script setup>
 import { ref, onMounted, watch, reactive } from 'vue'
 import { getAllCards, addCardToDeck } from '@/services/cards'
+import { updateAlert } from '@/utils/alertUtils'
+import AlertBus from '@/components/AlertBus/AlertBus.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import Loader from '@/components/Loader/Loader.vue'
 import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilter.vue'
+import Loader from '@/components/Loader/Loader.vue'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
 import DetailedDialog from './Partials/DetailedDialog/DetailedDialog.vue'
 
@@ -36,6 +46,12 @@ const page = ref(1)
 const pageCount = ref(1)
 const rpp = ref(10)
 const loading = ref(false)
+const alert = reactive({
+  show: false,
+  type: '',
+  title: '',
+  text: ''
+})
 const optionsView = ref([
   { title: '10', value: 10 },
   { title: '25', value: 25 },
@@ -51,7 +67,12 @@ const detailedCardInformation = reactive({
   cardId: '',
   createdAt: ''
 })
-
+const handlerAlert = (type, title, text) => {
+  updateAlert(alert, { show: true, type: type, title: title, text: text })
+}
+const closeAlert = () => {
+  alert.show = false
+}
 const getAll = async () => {
   try {
     loading.value = true
@@ -59,7 +80,7 @@ const getAll = async () => {
     cards.value = data.list.filter((card) => card.name && card.imageUrl).map(formatCard)
     pageCount.value = Math.ceil(headers['content-length'] / rpp.value)
   } catch (error) {
-    console.error('Erro ao buscar as cartas:', error)
+    handlerAlert('error', 'Erro ao buscar as cartas', error)
   } finally {
     loading.value = false
   }
@@ -94,13 +115,18 @@ const viewDetails = (card) => {
 }
 
 const handleObtainCard = () => {
+  loading.value = true
   const payload = {
     cardIds: [detailedCardInformation.cardId]
   }
   try {
     addCardToDeck(payload)
+    handlerAlert('success', 'Sucesso ao adicionar a carta', 'Carta adicionada ao seu deck!')
+    detailedDialog.value = false
   } catch (error) {
-    console.error('Erro ao adicionar a carta:', error)
+    handlerAlert('error', 'Erro ao adicionar a carta', error)
+  } finally {
+    loading.value = false
   }
 }
 
