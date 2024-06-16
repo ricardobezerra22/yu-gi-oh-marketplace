@@ -10,7 +10,11 @@
         </template>
         <v-card min-width="300" theme="dark">
           <v-list>
-            <v-list-item prepend-icon="mdi mdi-account" :title="username" :subtitle="userEmail">
+            <v-list-item
+              prepend-icon="mdi mdi-account"
+              :title="username || 'Anônimo'"
+              :subtitle="userEmail"
+            >
             </v-list-item>
           </v-list>
 
@@ -48,9 +52,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { userLogout } from '@/services/login'
 import { useAuthStore } from '@/stores/authStore.js'
 
+const authStore = useAuthStore()
 const router = useRouter()
 defineProps({
   menuItems: {
@@ -78,12 +82,10 @@ const handleNavigation = (path, action) => {
 }
 
 const unauthenticatedUser = () => {
-  const authStore = useAuthStore()
   authStore.clearUserData()
   router.push({ name: 'home' })
 }
 const logout = () => {
-  userLogout()
   unauthenticatedUser()
 }
 </script>

@@ -43,6 +43,7 @@
 <script setup>
 import InputFields from '@/components/InputFields/InputFields.vue'
 import { userLogin } from '@/services/login'
+import { useAuthStore } from '@/stores/authStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -50,7 +51,7 @@ const email = ref('')
 const password = ref('')
 const router = useRouter()
 const emit = defineEmits(['openRegisterDialog'])
-
+const authStore = useAuthStore()
 const openRegisterDialog = () => {
   emit('openRegisterDialog')
 }
@@ -97,7 +98,7 @@ const showAlert = (success, message) => {
     show: true,
     type: success ? 'success' : 'error',
     title: success ? 'Login efetuado!' : 'Erro ao tentar entrar!',
-    text: success ? "Bem-vindo ao YUGIOH!'" : message
+    text: success ? `Bem-vindo ao YUGIOH! ${authStore.username}` : message
   }
   emit('handlerLogin', alert)
 }
@@ -118,7 +119,8 @@ const isFormValid = () => {
 const login = async () => {
   if (isFormValid()) {
     try {
-      await userLogin(getLoginData())
+      const response = await userLogin(getLoginData())
+      authStore.setUserData(response.data.user, response.data.token)
       showAlert(true, '')
       resetForm()
       setTimeout(() => {

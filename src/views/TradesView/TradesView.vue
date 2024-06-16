@@ -23,7 +23,8 @@
     <div class="trade-card-container-cards" v-for="(trade, index) in trades" :key="index">
       <div class="trade-card-container-cards-title text-center mb-4">
         <span
-          >{{ `Troca realizada por ${trade.name}` }} <v-icon class="pl-2">mdi mdi-delete</v-icon>
+          >{{ `Troca realizada por ${trade.name}` }}
+          <v-icon v-if="auth.isAuthenticated" class="pl-2">mdi mdi-delete</v-icon>
         </span>
         <br />
         <span>{{ trade.createdAt }}</span>
@@ -85,6 +86,7 @@
 import Loader from '@/components/Loader/Loader.vue'
 import { compareTime } from '@/utils/dateUtils'
 import { ref, reactive, onMounted, watch } from 'vue'
+import { useAuthStore } from '@/stores/authStore'
 import { getRequestedCards } from '@/services/trades'
 import DetailedDialog from '@/views/AllCardsView/Partials/DetailedDialog/DetailedDialog.vue'
 
@@ -96,6 +98,7 @@ const detailedCardInformation = reactive({
   cardId: '',
   createdAt: ''
 })
+const auth = useAuthStore()
 const pageCount = ref(1)
 const loading = ref(false)
 const openDetailedDialog = (card) => {
