@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar lg">
+  <div class="navbar xs">
     <div class="logo-img">
       <img src="@/assets/images/logo.png" alt="logo" />
     </div>
@@ -25,7 +25,7 @@
               v-for="(item, i) in menuItems"
               :key="i"
               class="list-item-title"
-              @click="handleNavigation(item.path)"
+              @click="handleNavigation(item.path, item.action)"
             >
               {{ item.title }}
             </v-list-item>

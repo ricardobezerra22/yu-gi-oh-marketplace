@@ -9,6 +9,6 @@ export async function requestTrade(payload) {
   return await api.post('/trades', payload)
 }
 
-export async function deleteRequest(payload) {
+export async function deleteTradeRequest(payload) {
   return await api.delete(`/trades/${payload}`)
 }

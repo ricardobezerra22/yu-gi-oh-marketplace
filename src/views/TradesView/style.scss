@@ -11,7 +11,7 @@
   min-height: 100vh;
   margin: 0 auto;
   gap: 1rem;
-  max-width: 850px;
+  max-width: 1078px;
   padding: 40px 20px;
   display: grid;
   grid-template-columns: auto auto;
@@ -29,7 +29,7 @@
     max-height: 35.625rem !important;
 
     @media screen and (min-width: 768px) {
-      width: 27.1875rem;
+      width: 31rem;
     }
     &-title {
       font-size: 1.25rem;
