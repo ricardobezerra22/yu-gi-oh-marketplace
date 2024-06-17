@@ -1,20 +1,17 @@
 <template>
   <div class="container-wrapper">
     <Loader :loading="loading" />
-    <div class="inventory-cards" v-if="!loading">
-      <div class="inventory-cards-title">
-        <h3>Minhas cartas</h3>
-      </div>
+    <DefaultHeader :headers="header" v-if="!loading">
       <div class="inventory-cards-request-trade">
         <v-btn variant="outlined" class="btn" @click="openRequestDialog">Solicitar troca</v-btn>
       </div>
       <div class="inventory-cards-filters">
-        <div class="inventory-cards-helper">
+        <div class="inventory-cards-helper text-center">
           {{ `Mostrando ${cards.length} resultados válidos` }}
         </div>
       </div>
       <ListOfCards :cards="cards" @view-details="viewDetails" />
-    </div>
+    </DefaultHeader>
     <DefaultDialog
       v-model="requestDialog"
       :title="'Troque cartas por outras'"
@@ -72,9 +69,13 @@
         </template>
       </v-autocomplete>
       <div class="request-dialog-submit-btn">
-        <v-btn variant="outlined" class="btn" @click="handleSubmitTradeRequest">{{
-          'Solicitar troca'
-        }}</v-btn>
+        <v-btn
+          variant="outlined"
+          class="btn"
+          :disabled="offeringCard.length === 0"
+          @click="handleSubmitTradeRequest"
+          >{{ 'Solicitar troca' }}</v-btn
+        >
       </div>
     </DefaultDialog>
     <DetailedDialog
@@ -102,7 +103,7 @@ import { getMyCards, getAllCards } from '@/services/cards'
 import { requestTrade } from '@/services/trades'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
 import AlertBus from '@/components/AlertBus/AlertBus.vue'
-
+import DefaultHeader from '@/components/DefaultHeader/DefaultHeader.vue'
 import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 
 const cards = ref([])
@@ -125,6 +126,7 @@ const alert = reactive({
   title: '',
   text: ''
 })
+const header = 'Minhas cartas'
 const getInventory = async () => {
   try {
     loading.value = true

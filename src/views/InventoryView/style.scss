@@ -41,7 +41,7 @@
 }
 
 .btn {
-  @include font-source(0.775rem, $white, false, false);
+  @include font-source(1rem, $white, false, false);
   @include button($black-color, $accent-color, $text-secondary);
   padding: 0px 20px;
   border-radius: 1rem;

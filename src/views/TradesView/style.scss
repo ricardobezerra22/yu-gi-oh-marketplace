@@ -1,5 +1,10 @@
 /* style.scss */
 @import '@/styles/global.scss'; // Assuming your global styles are defined here
+.container-wrapper {
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 .trade-card-container {
   align-items: center;
@@ -51,17 +56,4 @@
 
 .trade-card-container-cards {
   max-height: 35.625rem !important;
-}
-.filters {
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 2rem;
-  @media screen and (min-width: 768px) {
-    max-width: 25rem;
-  }
-}
-
-.pagination {
-  max-width: 600px;
-  margin: 0 auto;
 }

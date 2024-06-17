@@ -1,10 +1,7 @@
 <template>
   <div class="container-wrapper">
     <Loader :loading />
-    <div class="all-cards" v-if="!loading">
-      <div class="all-cards-title">
-        <h3>Todas as cartas</h3>
-      </div>
+    <DefaultHeader :headers="header" v-if="!loading">
       <ItemsPerPageFilter
         :optionsView="optionsView"
         :rpp="rpp"
@@ -12,7 +9,8 @@
         :results="cards.length"
       />
       <ListOfCards :cards="cards" @viewDetails="viewDetails" />
-    </div>
+    </DefaultHeader>
+
     <Pagination :page="page" :pageCount="pageCount" @updatePage="updatePage" />
     <DetailedDialog
       v-model="detailedDialog"
@@ -40,6 +38,7 @@ import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilt
 import Loader from '@/components/Loader/Loader.vue'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
 import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
+import DefaultHeader from '@/components/DefaultHeader/DefaultHeader.vue'
 
 const cards = ref([])
 const page = ref(1)
@@ -58,7 +57,7 @@ const optionsView = ref([
   { title: '50', value: 50 },
   { title: '100', value: 100 }
 ])
-
+const header = 'Todas as cartas'
 const detailedDialog = ref(false)
 const detailedCardInformation = reactive({
   name: '',
