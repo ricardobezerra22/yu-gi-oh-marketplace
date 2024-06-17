@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQonMrfPFEjmiOTxP8TnH2F6F5XgiJeXoWRA&s" alt="Project logo"></a>
+ <img width=300px height=200px src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQonMrfPFEjmiOTxP8TnH2F6F5XgiJeXoWRA&s" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Yu-Gi-Oh! Marketplace</h3>
@@ -72,7 +72,7 @@ Rodar o projeto
 npm run dev
 ```
 
-<img src="https://imgur.com/gallery/yugioh-8IlcspH" alt="usage">
+![Login](https://imgur.com/gallery/yugioh-8IlcspH)
 
 ## 🎈 Uso <a name="usage"></a>
 
@@ -94,7 +94,7 @@ Para realizar trocas e criar seu próprio baralho, você precisará se registrar
 
 Essas funcionalidades permitem uma experiência de uso eficiente e personalizada, facilitando a interação com o sistema de cartas e trocas.
 
-## ⛏️ Built Using <a name = "built_using"></a>- [Vue.js](https://vuejs.org/) - Framework Web
+## ⛏️ Tecnologias usadas <a name = "built_using"></a>- [Vue.js](https://vuejs.org/) - Framework Web
 
 - [Vuetify](https://vuetifyjs.com/en/getting-started/installation/#installation) - Biblioteca de Componentes/Estilos para Vue.js
 - [Vite](https://vitejs.dev/) - Ferramenta de Build para Frontend
