@@ -72,7 +72,12 @@ Rodar o projeto
 npm run dev
 ```
 
-![Login](https://imgur.com/gallery/yugioh-8IlcspH)
+![Home](https://imgur.com/a/PK2HiNs)
+
+![Login](https://imgur.com/BIylRIA)
+![Registro](https://imgur.com/Gw3xIly)
+![Todas as cartas](https://imgur.com/Zgh3z4M)
+![Trocas](https://imgur.com/NY23IAy)
 
 ## 🎈 Uso <a name="usage"></a>
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="container-wrapper">
-    <Loader :loading="loading" />
-    <DefaultHeader :headers="header" v-if="!loading">
+  <Loader :loading="loading" />
+  <div class="container-wrapper" v-if="!loading">
+    <DefaultHeader :headers="header">
       <div class="inventory-cards-request-trade">
         <v-btn variant="outlined" class="btn" @click="openRequestDialog">Solicitar troca</v-btn>
       </div>

@@ -1,7 +1,7 @@
 <template>
-  <div class="container-wrapper">
-    <Loader :loading />
-    <DefaultHeader :headers="header" v-if="!loading">
+  <Loader :loading />
+  <div class="container-wrapper" v-if="!loading">
+    <DefaultHeader :headers="header">
       <ItemsPerPageFilter
         :optionsView="optionsView"
         :rpp="rpp"
