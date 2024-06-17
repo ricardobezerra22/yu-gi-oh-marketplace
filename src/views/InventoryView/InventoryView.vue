@@ -24,8 +24,10 @@
         v-model="offeringCard"
         :items="cards"
         item-title="name"
+        class="offering-card"
         chips
         multiple
+        rounded
         clearable
         variant="outlined"
         item-value="id"
@@ -48,7 +50,9 @@
         v-model="receivingCard"
         :items="allCards"
         multiple
+        rounded
         clearable
+        class="receiving-card"
         variant="outlined"
         item-title="name"
         :hint="'Você pode escolher mais de uma'"
@@ -68,7 +72,9 @@
         </template>
       </v-autocomplete>
       <div class="request-dialog-submit-btn">
-        <v-btn variant="outlined" @click="handleSubmitTradeRequest">{{ 'Solicitar troca' }}</v-btn>
+        <v-btn variant="outlined" class="btn" @click="handleSubmitTradeRequest">{{
+          'Solicitar troca'
+        }}</v-btn>
       </div>
     </DefaultDialog>
     <DetailedDialog
@@ -77,6 +83,13 @@
       :detailedCardInformation="detailedCardInformation"
       :isObtainable="false"
     />
+    <AlertBus
+      :title="alert.title"
+      :text="alert.text"
+      :type="alert.type"
+      :alert="alert.show"
+      @closeAlert="closeAlert"
+    />
   </div>
 </template>
 
@@ -84,9 +97,11 @@
 import DefaultDialog from '@/components/DefaultDialog/DefaultDialog.vue'
 import Loader from '@/components/Loader/Loader.vue'
 import { ref, onMounted, reactive } from 'vue'
+import { updateAlert } from '@/utils/alertUtils'
 import { getMyCards, getAllCards } from '@/services/cards'
 import { requestTrade } from '@/services/trades'
 import ListOfCards from '@/components/ListOfCards/ListOfCards.vue'
+import AlertBus from '@/components/AlertBus/AlertBus.vue'
 
 import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 
@@ -103,6 +118,12 @@ const detailedCardInformation = reactive({
   imageUrl: '',
   cardId: '',
   createdAt: ''
+})
+const alert = reactive({
+  show: false,
+  type: '',
+  title: '',
+  text: ''
 })
 const getInventory = async () => {
   try {
@@ -134,19 +155,43 @@ const truncatedDescription = (value, maxLength = 30) => {
   } else return value
 }
 
+const handlerAlert = (type, title, text) => {
+  updateAlert(alert, { show: true, type: type, title: title, text: text })
+}
+const resetValues = () => {
+  requestDialog.value = false
+  offeringCard.value = []
+  receivingCard.value = []
+}
 const handleSubmitTradeRequest = () => {
+  loading.value = true
+
   const payload = {
     cards: [
       ...offeringCard.value.map((cardId) => ({ cardId, type: 'OFFERING' })),
       ...receivingCard.value.map((cardId) => ({ cardId, type: 'RECEIVING' }))
     ]
   }
+  if (offeringCard.value.length !== receivingCard.value.length) {
+    handlerAlert(
+      'error',
+      'Erro ao solicitar cartas',
+      'O número de cartas oferecidas deve ser igual ao número de cartas recebidas'
+    )
+    loading.value = false
+    return
+  }
   try {
     requestTrade(payload)
+    handlerAlert('success', 'Solicitação realizada com sucesso', 'Visualize em trocas em aberto')
   } catch (error) {
-    console.error('Erro ao solicitar troca:', error)
+    handlerAlert('error', 'Erro ao solicitar cartas', error)
+  } finally {
+    loading.value = false
+    resetValues()
   }
 }
+
 const viewDetails = (card) => {
   detailedCardInformation.name = card.name
   detailedCardInformation.description = card.description
@@ -155,7 +200,9 @@ const viewDetails = (card) => {
   detailedCardInformation.createdAt = card.createdAt
   detailedDialog.value = true
 }
-
+const closeAlert = () => {
+  alert.show = false
+}
 const formatCard = (card) => ({
   id: card.id,
   name: card.name,
