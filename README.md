@@ -3,7 +3,7 @@
  <img width=300px height=200px src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQonMrfPFEjmiOTxP8TnH2F6F5XgiJeXoWRA&s" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Yu-Gi-Oh! Marketplace</h3>
+<h3 align="center">Yu-Gi-Oh! Marketplace https://yu-gi-oh-marketplace.netlify.app/ </h3>
 
 <div align="center">
 
@@ -72,17 +72,13 @@ Rodar o projeto
 npm run dev
 ```
 
-![Home](https://imgur.com/a/PK2HiNs)
 
-![Login](https://github.com/ricardobezerra22/yu-gi-oh-marketplace/assets/104892153/d69623fc-ce49-4154-b976-225b1e58fb90)
+![!](https://github.com/ricardobezerra22/yu-gi-oh-marketplace/assets/104892153/d69623fc-ce49-4154-b976-225b1e58fb90)
 ![!](https://github.com/ricardobezerra22/yu-gi-oh-marketplace/assets/104892153/82b0da2e-6881-4686-ba27-f50bb5b909cf)
 ![!](https://github.com/ricardobezerra22/yu-gi-oh-marketplace/assets/104892153/24306369-083a-436e-b664-b7126bf886b3)
 ![!](https://github.com/ricardobezerra22/yu-gi-oh-marketplace/assets/104892153/ac244b92-924f-487b-8484-9e9c8450e87e)
 ![!](https://github.com/ricardobezerra22/yu-gi-oh-marketplace/assets/104892153/95e4a536-858c-46c8-bc55-cbf2ae75f4ce)
 )
-![Registro](https://imgur.com/Gw3xIly)
-![Todas as cartas](https://imgur.com/Zgh3z4M)
-![Trocas](https://imgur.com/NY23IAy)
 
 ## 🎈 Uso <a name="usage"></a>
 
