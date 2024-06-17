@@ -11,16 +11,22 @@
 
     <div class="trade-card-container" v-if="!loading">
       <div class="trade-card-container-cards" v-for="(trade, index) in trades" :key="index">
-        <div class="trade-card-container-cards-title text-center mb-4">
+        <div class="trade-card-container-cards-title">
           <span
             >{{ `Troca realizada por ${trade.name}` }}
-            <v-icon v-if="auth.isAuthenticated" class="pl-2">mdi mdi-delete</v-icon>
+            <v-icon v-if="auth.isAuthenticated" class="delete-icon pl-2">mdi mdi-delete</v-icon>
           </span>
           <br />
-          <span>{{ trade.createdAt }}</span>
+          <span class="trade-card-container-cards-title-date">{{ trade.createdAt }}</span>
         </div>
         <div class="offered-cards">
-          <h3>{{ `Cartas oferecidas (${trade.offeredCards.length})` }}</h3>
+          <div class="description-of-cards">
+            <h3>{{ `Cartas oferecidas (${trade.offeredCards.length})` }}</h3>
+            <span v-for="(card, index) in trade.offeredCards" :key="index">{{
+              card.card.name
+            }}</span>
+          </div>
+
           <div class="trade-card" ref="offeredCardContainer">
             <div
               v-for="(card, index) in trade.offeredCards"
@@ -38,8 +44,12 @@
         </div>
         <div class="received-cards">
           <hr />
-
-          <h3>{{ `Cartas a receber (${trade.receivedCards.length})` }}</h3>
+          <div class="description-of-cards">
+            <h3>{{ `Cartas a receber (${trade.receivedCards.length})` }}</h3>
+            <span v-for="(card, index) in trade.receivedCards" :key="index">{{
+              card.card.name
+            }}</span>
+          </div>
           <div class="trade-card" ref="receivedCardContainer">
             <div
               v-for="(card, index) in trade.receivedCards"
@@ -167,7 +177,7 @@ const closeAlert = () => {
   alert.show = false
 }
 const getCardStyle = (index) => {
-  const offset = index * 20
+  const offset = index * 10
   return {
     transform: `translateX(${offset}px)`,
     position: 'absolute',

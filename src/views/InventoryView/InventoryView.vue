@@ -55,6 +55,7 @@
         :hint="'Você pode escolher mais de uma'"
         item-value="id"
         label="Escolha a carta que deseja Receber"
+        :loading
       >
         <template v-slot:chip="{ props, item }">
           <v-chip v-bind="props" :prepend-avatar="item.raw.imageUrl" :text="item.raw.name"></v-chip>
@@ -72,7 +73,7 @@
         <v-btn
           variant="outlined"
           class="btn"
-          :disabled="offeringCard.length === 0"
+          :disabled="isValidTrade"
           @click="handleSubmitTradeRequest"
           >{{ 'Solicitar troca' }}</v-btn
         >
@@ -97,7 +98,7 @@
 <script setup>
 import DefaultDialog from '@/components/DefaultDialog/DefaultDialog.vue'
 import Loader from '@/components/Loader/Loader.vue'
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, computed } from 'vue'
 import { updateAlert } from '@/utils/alertUtils'
 import { getMyCards, getAllCards } from '@/services/cards'
 import { requestTrade } from '@/services/trades'
@@ -157,43 +158,61 @@ const truncatedDescription = (value, maxLength = 30) => {
   } else return value
 }
 
-const handlerAlert = (type, title, text) => {
-  updateAlert(alert, { show: true, type: type, title: title, text: text })
-}
 const resetValues = () => {
   requestDialog.value = false
   offeringCard.value = []
   receivingCard.value = []
 }
-const handleSubmitTradeRequest = () => {
+const handlerAlert = (type, title, text) => {
+  updateAlert(alert, { show: true, type: type, title: title, text: text })
+}
+const handleSubmitTradeRequest = async () => {
   loading.value = true
 
-  const payload = {
-    cards: [
-      ...offeringCard.value.map((cardId) => ({ cardId, type: 'OFFERING' })),
-      ...receivingCard.value.map((cardId) => ({ cardId, type: 'RECEIVING' }))
-    ]
-  }
-  if (offeringCard.value.length !== receivingCard.value.length) {
+  const offeringCards = offeringCard.value
+  const receivingCards = receivingCard.value
+
+  const isInvalidTrade = offeringCards.some((cardId) => receivingCards.includes(cardId))
+
+  if (isInvalidTrade) {
     handlerAlert(
       'error',
-      'Erro ao solicitar cartas',
-      'O número de cartas oferecidas deve ser igual ao número de cartas recebidas'
+      'Erro ao solicitar troca de cartas',
+      'Você não pode trocar uma carta por ela mesma.'
     )
     loading.value = false
     return
   }
+
+  const payload = {
+    cards: [
+      ...offeringCards.map((cardId) => ({ cardId, type: 'OFFERING' })),
+      ...receivingCards.map((cardId) => ({ cardId, type: 'RECEIVING' }))
+    ]
+  }
+
   try {
-    requestTrade(payload)
+    await requestTrade(payload)
     handlerAlert('success', 'Solicitação realizada com sucesso', 'Visualize em trocas em aberto')
   } catch (error) {
-    handlerAlert('error', 'Erro ao solicitar cartas', error)
+    handlerAlert(
+      'error',
+      'Erro ao solicitar troca de cartas',
+      error.message || 'Erro desconhecido ao processar a solicitação.'
+    )
   } finally {
     loading.value = false
     resetValues()
   }
 }
-
+const isValidTrade = computed(() => {
+  return (
+    offeringCard.value.length === 0 ||
+    receivingCard.value.length === 0 ||
+    offeringCard.value.length > receivingCard.value.length ||
+    offeringCard.value.length < receivingCard.value.length
+  )
+})
 const viewDetails = (card) => {
   detailedCardInformation.name = card.name
   detailedCardInformation.description = card.description
