@@ -11,9 +11,6 @@
   gap: 10px;
 }
 
-.background {
-  grid-column: span 8;
-}
 .login-wrapper {
   display: flex;
   flex-direction: column;
@@ -34,9 +31,6 @@
 }
 
 .login-container {
-  grid-column: span 4;
-  background-color: #000000; /* Cor de fundo para Box2 */
-  @media screen and (min-width: 1024px) {
-    border-right: 3px solid $accent-color;
-  }
+  grid-column: span 12;
+  background-color: $black-color;
 }

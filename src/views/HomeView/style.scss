@@ -1,11 +1,9 @@
 @import '@/styles/global.scss';
 
 .container-wrapper {
-  min-height: 100vh;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  text-align: center;
+  padding: 7rem 0;
 }
 h1 {
   font-size: 2.5rem;
@@ -17,26 +15,32 @@ p {
   line-height: 1.6;
   margin-bottom: 30px;
 }
-
+.call-to-action {
+  text-align: center;
+}
 .btn {
-  @include font-source(1.5rem, $white, false, false);
+  @include font-source(1rem, $white, false, false);
+
+  @media screen and (min-width: 768px) {
+    @include font-source(1.5rem, $white, false, false);
+  }
   @include button($black-color, $accent-color, $text-secondary);
-  padding: 0px 40px;
-  border-radius: 3rem;
+  padding: 0px 20px;
+  border-radius: 2rem;
+  min-height: 3.125rem;
 }
 
 .home-view {
   display: flex;
-  justify-content: center;
-  align-content: center;
   align-items: center;
-  flex-wrap: wrap;
-
+  flex-direction: row;
   &-duel {
-    width: 50%;
+    padding: 10px 20px;
+    width: 100%;
   }
   &-greetings {
     text-align: justify;
-    width: 50%;
+    padding: 10px 20px;
+    width: 100%;
   }
 }

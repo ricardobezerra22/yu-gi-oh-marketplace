@@ -11,11 +11,21 @@
           participar da comunidade para fazer suas próprias trocas e colecionar suas próprias
           cartas.
         </p>
-        <v-btn variant="none" class="cta-button btn">Comece a Explorar</v-btn>
+        <div class="call-to-action">
+          <v-btn class="cta-button btn" @click="goToExplore">Comece a Explorar</v-btn>
+        </div>
       </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToExplore = () => {
+  router.push({ name: 'inventory' })
+}
+</script>
 
 <style scoped lang="scss" src="./style.scss"></style>

@@ -45,10 +45,6 @@ const username = computed(() => {
 </script>
 
 <style>
-/* #app {
-  background-image: url('@/assets/images/wall.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-} */
+#app {
+}
 </style>
