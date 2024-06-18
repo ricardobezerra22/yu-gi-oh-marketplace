@@ -1,0 +1,7 @@
+@import '@/styles/global.scss';
+
+.multi-selection-input {
+  @include font-source(0.775rem, $white, false, false);
+  padding: 15px 20px;
+  border-radius: 1rem;
+}

@@ -73,8 +73,8 @@ const closeAlert = () => {
   alert.show = false
 }
 const getAll = async () => {
+  loading.value = true
   try {
-    loading.value = true
     const { data, headers } = await getAllCards({ rpp: rpp.value, page: page.value })
     cards.value = data.list.filter((card) => card.name && card.imageUrl).map(formatCard)
     pageCount.value = Math.ceil(headers['content-length'] / rpp.value)
