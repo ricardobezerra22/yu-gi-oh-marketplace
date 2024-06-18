@@ -5,14 +5,12 @@
         <img src="@/assets/images/yugi-duel.png" alt="duel" />
       </div>
       <div class="home-view-greetings">
-        <h1>Bem-vindo ao Yu-Gi-Oh!</h1>
+        <h1>{{ greetings }}</h1>
         <p>
-          Aqui você pode explorar todas as cartas do jogo Yu-Gi-Oh!, ver trocas em andamento, e
-          participar da comunidade para fazer suas próprias trocas e colecionar suas próprias
-          cartas.
+          {{ infoSite }}
         </p>
         <div class="call-to-action">
-          <v-btn class="cta-button btn" @click="goToExplore">Comece a Explorar</v-btn>
+          <v-btn class="cta-button btn" @click="goToExplore">{{ callToAction }}</v-btn>
         </div>
       </div>
     </div>
@@ -22,7 +20,10 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
+const greetings = 'Bem-vindo ao Yu-Gi-Oh!'
+const infoSite =
+  'Aqui você pode explorar todas as cartas do jogo Yu-Gi-Oh!, ver trocas em andamento, e participar da comunidade para fazer suas trocas e colecionar suas cartas.'
+const callToAction = 'Comece a Explorar'
 const goToExplore = () => {
   router.push({ name: 'inventory' })
 }

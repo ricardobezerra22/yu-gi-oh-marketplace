@@ -1,5 +1,5 @@
 <template>
-  <Loader :loading />
+  <Loader :loading="loading" />
   <div class="container-wrapper" v-if="!loading">
     <DefaultHeader :headers="header">
       <ItemsPerPageFilter
@@ -7,18 +7,20 @@
         :rpp="rpp"
         @updateRpp="updateRpp"
         :results="trades.length"
-    /></DefaultHeader>
+      />
+    </DefaultHeader>
     <div class="trade-card-container">
       <div class="trade-card-container-cards" v-for="(trade, index) in trades" :key="index">
         <div class="trade-card-container-cards-title">
-          <span
-            >{{ `Solicitada por ${trade.name}` }}
+          <span>
+            {{ `${labels.requestedBy} ${trade.name}` }}
             <v-icon
               v-if="auth.isAuthenticated && trade.userId === auth.userId"
               @click="deleteTrade(trade.id)"
               class="delete-icon pl-2"
-              >mdi mdi-delete</v-icon
             >
+              mdi mdi-delete
+            </v-icon>
           </span>
           <br />
           <span class="trade-card-container-cards-title-date">{{ trade.createdAt }}</span>
@@ -26,20 +28,19 @@
         <div class="card-content">
           <div class="offered-cards">
             <div class="description-of-cards">
-              <h3>{{ `Cartas oferecidas (${trade.offeredCards.length})` }}</h3>
+              <h3>{{ `${labels.offeredCards} (${trade.offeredCards.length})` }}</h3>
               <template v-if="trade.offeredCards.length <= 3">
-                <span v-for="(card, index) in trade.offeredCards" :key="index">{{
-                  card.card.name
-                }}</span>
+                <span v-for="(card, index) in trade.offeredCards" :key="index">
+                  {{ card.card.name }}
+                </span>
               </template>
               <template v-else>
-                <span v-for="(card, index) in trade.offeredCards.slice(0, 2)" :key="index">{{
-                  card.card.name
-                }}</span>
+                <span v-for="(card, index) in trade.offeredCards.slice(0, 2)" :key="index">
+                  {{ card.card.name }}
+                </span>
                 <span>...</span>
               </template>
             </div>
-
             <div class="trade-card" ref="offeredCardContainer">
               <div
                 v-for="(card, index) in trade.offeredCards"
@@ -58,16 +59,16 @@
           <div class="received-cards">
             <hr />
             <div class="description-of-cards">
-              <h3>{{ `Cartas a receber (${trade.receivedCards.length})` }}</h3>
+              <h3>{{ `${labels.receivedCards} (${trade.receivedCards.length})` }}</h3>
               <template v-if="trade.receivedCards.length <= 3">
-                <span v-for="(card, index) in trade.receivedCards" :key="index">{{
-                  card.card.name
-                }}</span>
+                <span v-for="(card, index) in trade.receivedCards" :key="index">
+                  {{ card.card.name }}
+                </span>
               </template>
               <template v-else>
-                <span v-for="(card, index) in trade.receivedCards.slice(0, 2)" :key="index">{{
-                  card.card.name
-                }}</span>
+                <span v-for="(card, index) in trade.receivedCards.slice(0, 2)" :key="index">
+                  {{ card.card.name }}
+                </span>
                 <span>...</span>
               </template>
             </div>
@@ -88,7 +89,6 @@
           </div>
         </div>
       </div>
-
       <DetailedDialog
         v-model="detailedDialog"
         :detailedCardInformation="detailedCardInformation"
@@ -116,10 +116,10 @@ import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 import AlertBus from '@/components/AlertBus/AlertBus.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import DefaultHeader from '@/components/DefaultHeader/DefaultHeader.vue'
-
 import ItemsPerPageFilter from '@/components/ItemsPerPageFilter/ItemsPerPageFilter.vue'
 
-const header = 'Últimas trocas em andamento'
+// State
+const header = 'Últimas trocas em andamento'
 const detailedDialog = ref(false)
 const detailedCardInformation = reactive({
   name: '',
@@ -137,14 +137,6 @@ const alert = reactive({
 const auth = useAuthStore()
 const pageCount = ref(1)
 const loading = ref(false)
-const openDetailedDialog = (card) => {
-  detailedCardInformation.name = card.name
-  detailedCardInformation.description = card.description
-  detailedCardInformation.imageUrl = card.imageUrl
-  detailedCardInformation.cardId = card.id
-  detailedCardInformation.createdAt = card.createdAt
-  detailedDialog.value = true
-}
 const optionsView = ref([
   { title: '5', value: 5 },
   { title: '10', value: 10 },
@@ -154,11 +146,44 @@ const optionsView = ref([
 const page = ref(1)
 const rpp = ref(10)
 const trades = ref([])
-const handlerAlert = (type, title, text) => {
-  updateAlert(alert, { show: true, type: type, title: title, text: text })
+
+// Labels
+const labels = {
+  requestedBy: 'Solicitada por',
+  offeredCards: 'Cartas oferecidas',
+  receivedCards: 'Cartas a receber',
+  successDelete: 'Solicitação deletada',
+  errorDelete: 'Erro ao deletar a troca',
+  errorFetch: 'Erro ao buscar as cartas',
+  unknownError: 'Erro desconhecido ao processar a solicitação'
 }
+
+// Computed properties
+watch(pageCount, () => {})
+
+// Lifecycle hooks
+onMounted(() => {
+  fetchTradeRequests()
+})
+
+// Functions
+const openDetailedDialog = (card) => {
+  Object.assign(detailedCardInformation, {
+    name: card.name,
+    description: card.description,
+    imageUrl: card.imageUrl,
+    cardId: card.id,
+    createdAt: card.createdAt
+  })
+  detailedDialog.value = true
+}
+
+const handleAlert = (type, title, text) => {
+  updateAlert(alert, { show: true, type, title, text })
+}
+
 const processTradeData = (tradesList) => {
-  trades.value = tradesList.map(formatTrade).filter(isValidTrade)
+  trades.value = tradesList.map(formatTrade).filter(Boolean)
 }
 
 const formatTrade = (trade) => {
@@ -182,36 +207,34 @@ const filterCardsByType = (cards, type) => {
   return cards.filter((card) => card.type === type)
 }
 
-const isValidTrade = (trade) => {
-  return trade !== null
-}
-
 const deleteTrade = async (tradeId) => {
   try {
     await deleteTradeRequest(tradeId)
-    handlerAlert('success', 'Solicitação deletada', false)
-    rpp.value = 10
-    page.value = 1
-    getRequests()
+    handleAlert('success', labels.successDelete, false)
+    resetPagination()
+    fetchTradeRequests()
   } catch (error) {
-    handlerAlert('error', 'Erro ao deletar a troca', error)
+    handleAlert('error', labels.errorDelete, error.message)
   }
 }
-const getRequests = async () => {
+
+const fetchTradeRequests = async () => {
   loading.value = true
   try {
     const { data, headers } = await getRequestedCards({ rpp: rpp.value, page: page.value })
     processTradeData(data.list)
     pageCount.value = Math.ceil(headers['content-length'] / rpp.value)
   } catch (error) {
-    handlerAlert('error', 'Erro ao buscar as cartas', error)
+    handleAlert('error', labels.errorFetch, error.message)
   } finally {
     loading.value = false
   }
 }
+
 const closeAlert = () => {
   alert.show = false
 }
+
 const getCardStyle = (index) => {
   const offset = index * 10
   return {
@@ -225,17 +248,18 @@ const getCardStyle = (index) => {
 const updateRpp = (value) => {
   rpp.value = value
   page.value = 1
-  getRequests()
-}
-const updatePage = (value) => {
-  page.value = value
-  getRequests()
+  fetchTradeRequests()
 }
 
-onMounted(() => {
-  getRequests()
-})
-watch(pageCount, () => {})
+const updatePage = (value) => {
+  page.value = value
+  fetchTradeRequests()
+}
+
+const resetPagination = () => {
+  rpp.value = 10
+  page.value = 1
+}
 </script>
 
 <style scoped lang="scss" src="./style.scss"></style>
