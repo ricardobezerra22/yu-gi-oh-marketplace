@@ -10,7 +10,7 @@
           <v-card-title class="headline">Detalhes</v-card-title>
           <span class="title">{{ detailedCardInformation.name }}</span>
           <span class="description">{{ detailedCardInformation.description }}</span>
-          <div class="btn-action" v-if="isObtainable">
+          <div class="btn-action" v-if="isObtainable && auth.isAuthenticated">
             <v-btn class="obtain-button" :loading="loading" @click="obtainCard(detailedCardId)">
               {{ obtainText }}
             </v-btn>
@@ -22,6 +22,8 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/authStore'
+
 defineProps({
   detailedCardInformation: {
     type: Object,
@@ -36,6 +38,7 @@ defineProps({
     default: false
   }
 })
+const auth = useAuthStore()
 
 const emit = defineEmits(['obtainCard'])
 const obtainText = 'Obter'
