@@ -12,80 +12,35 @@
     <div class="trade-card-container">
       <div class="trade-card-container-cards" v-for="(trade, index) in trades" :key="index">
         <div class="trade-card-container-cards-title">
+          <v-icon
+            v-if="auth.isAuthenticated && trade.userId === auth.userId"
+            @click="deleteTrade(trade.id)"
+            :icon="'mdi mdi-delete'"
+            class="delete-icon pl-2"
+          />
+
           <span>
             {{ `${labels.requestedBy} ${trade.name}` }}
-            <v-icon
-              v-if="auth.isAuthenticated && trade.userId === auth.userId"
-              @click="deleteTrade(trade.id)"
-              class="delete-icon pl-2"
-            >
-              mdi mdi-delete
-            </v-icon>
           </span>
+
           <br />
           <span class="trade-card-container-cards-title-date">{{ trade.createdAt }}</span>
         </div>
         <div class="card-content">
           <div class="offered-cards">
-            <div class="description-of-cards">
-              <h3>{{ `${labels.offeredCards} (${trade.offeredCards.length})` }}</h3>
-              <template v-if="trade.offeredCards.length <= 3">
-                <span v-for="(card, index) in trade.offeredCards" :key="index">
-                  {{ card.card.name }}
-                </span>
-              </template>
-              <template v-else>
-                <span v-for="(card, index) in trade.offeredCards.slice(0, 2)" :key="index">
-                  {{ card.card.name }}
-                </span>
-                <span>...</span>
-              </template>
-            </div>
-            <div class="trade-card" ref="offeredCardContainer">
-              <div
-                v-for="(card, index) in trade.offeredCards"
-                :key="index"
-                :style="getCardStyle(index)"
-              >
-                <img
-                  :src="card.card.imageUrl"
-                  alt="card"
-                  class="trade-card-container-cards-img offered"
-                  @click="openDetailedDialog(card.card)"
-                />
-              </div>
-            </div>
+            <CardSection
+              :title="labels.offeredCards"
+              :cards="trade.offeredCards"
+              @openDetailedDialog="openDetailedDialog"
+            />
           </div>
+          <hr />
           <div class="received-cards">
-            <hr />
-            <div class="description-of-cards">
-              <h3>{{ `${labels.receivedCards} (${trade.receivedCards.length})` }}</h3>
-              <template v-if="trade.receivedCards.length <= 3">
-                <span v-for="(card, index) in trade.receivedCards" :key="index">
-                  {{ card.card.name }}
-                </span>
-              </template>
-              <template v-else>
-                <span v-for="(card, index) in trade.receivedCards.slice(0, 2)" :key="index">
-                  {{ card.card.name }}
-                </span>
-                <span>...</span>
-              </template>
-            </div>
-            <div class="trade-card" ref="receivedCardContainer">
-              <div
-                v-for="(card, index) in trade.receivedCards"
-                :key="index"
-                :style="getCardStyle(index)"
-              >
-                <img
-                  :src="card.card.imageUrl"
-                  alt="card"
-                  class="trade-card-container-cards-img received"
-                  @click="openDetailedDialog(card.card)"
-                />
-              </div>
-            </div>
+            <CardSection
+              :title="labels.receivedCards"
+              :cards="trade.receivedCards"
+              @openDetailedDialog="openDetailedDialog"
+            />
           </div>
         </div>
       </div>
@@ -111,6 +66,7 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import { updateAlert } from '@/utils/alertUtils'
 import { useAuthStore } from '@/stores/authStore'
 import { getRequestedCards, deleteTradeRequest } from '@/services/trades'
+import CardSection from '@/components/CardSection/CardSection.vue'
 import Loader from '@/components/Loader/Loader.vue'
 import DetailedDialog from '@/components/DetailedDialog/DetailedDialog.vue'
 import AlertBus from '@/components/AlertBus/AlertBus.vue'
@@ -233,16 +189,6 @@ const fetchTradeRequests = async () => {
 
 const closeAlert = () => {
   alert.show = false
-}
-
-const getCardStyle = (index) => {
-  const offset = index * 10
-  return {
-    transform: `translateX(${offset}px)`,
-    position: 'absolute',
-    top: '-10%',
-    left: '0'
-  }
 }
 
 const updateRpp = (value) => {

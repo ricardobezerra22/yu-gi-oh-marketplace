@@ -1,0 +1,24 @@
+@import '@/styles/global.scss';
+
+.description-of-cards {
+  display: flex;
+  flex-direction: column;
+}
+.trade-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.625rem;
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+.trade-card-container-cards-img {
+  width: 100%; /* Ensure the image fits within the container */
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.trade-card-container-cards-img:hover {
+  transform: scale(1.1);
+  border: 1px solid $accent-color;
+  border-radius: 0.5rem;
+}
